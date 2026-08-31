@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select People</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .people-list-container {
+            position: relative;
+            max-height: 200px;
+            overflow: hidden;
+            width: 350px;
+        }
+        .people-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .people-list-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+        .people-list-item img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .arrow {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            z-index: 10;
+            background-color: #f8f9fa; /* Adding a background to make arrows more visible */
+        }
+        .arrow-up {
+            top: 0;
+        }
+        .arrow-down {
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Select People</h2>
+        <form id="taskForm">
+            <div class="form-group">
+                <label for="taskName">Task Name</label>
+                <input type="text" id="taskName" name="taskName" class="form-control" required>
+            </div>
+            <div class="people-list-container">
+                <div class="arrow arrow-up">&#9650;</div>
+                <ul id="peopleList" class="list-group people-list">
+                    <!-- People will be loaded here dynamically -->
+                </ul>
+                <div class="arrow arrow-down">&#9660;</div>
+            </div>
+            <button type="submit" id="saveBtn" class="btn btn-primary mt-3">Save Task</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let people = [];
+            let currentIndex = 0;
+            const itemsPerPage = 3;
+
+            const fetchPeople = async () => {
+                try {
+                    const response = await fetch('config/getPeople');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    people = await response.json();
+                    renderPeople();
+                } catch (error) {
+                    console.error('There was a problem with the fetch operation:', error);
+                }
+            };
+
+            const renderPeople = () => {
+                const peopleList = document.getElementById('peopleList');
+                peopleList.innerHTML = '';
+                const endIndex = Math.min(currentIndex + itemsPerPage, people.length);
+                for (let i = currentIndex; i < endIndex; i++) {
+                    const person = people[i];
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('list-group-item', 'people-list-item');
+                    listItem.innerHTML = `<img src="${person.profilePic}" alt="${person.name}"> ${person.firstname} ${person.lastname}`;
+                    listItem.dataset.id = person.id;
+                    listItem.addEventListener('click', function() {
+                        listItem.classList.toggle('active');
+                    });
+                    peopleList.appendChild(listItem);
+                }
+                adjustArrowVisibility();
+            };
+
+            const adjustArrowVisibility = () => {
+                document.querySelector('.arrow-up').style.display = currentIndex === 0 ? 'none' : 'block';
+                document.querySelector('.arrow-down').style.display = currentIndex + itemsPerPage >= people.length ? 'none' : 'block';
+            };
+
+            const scrollUp = () => {
+                if (currentIndex > 0) {
+                    currentIndex -= itemsPerPage;
+                    renderPeople();
+                }
+            };
+
+            const scrollDown = () => {
+                if (currentIndex + itemsPerPage < people.length) {
+                    currentIndex += itemsPerPage;
+                    renderPeople();
+                }
+            };
+
+            document.querySelector('.arrow-up').addEventListener('click', scrollUp);
+            document.querySelector('.arrow-down').addEventListener('click', scrollDown);
+
+            document.getElementById('taskForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const selectedPeople = [];
+                document.querySelectorAll('.list-group-item.active').forEach(item => {
+                    selectedPeople.push(item.dataset.id);
+                });
+
+                const taskName = document.getElementById('taskName').value;
+                const myarray = Array(1);
+                myarray.push(taskName);
+                
+
+                fetch('config/saveTask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ myarray, selectedPeople }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the save task operation:', error);
+                });
+            });
+
+            fetchPeople();
+        });
+    </script>
+</body>
+</html>
