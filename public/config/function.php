@@ -393,9 +393,9 @@ function getAllDeletedAccounts($tablename){
 if(isset($_POST['addNewToDo'])){
 
     global $conn;
-    $taskDescription = $_POST['description'];
+    $taskDescription = validate($_POST['description']);
 
-    $query = "INSERT INTO todo ('$taskDescription')";
+    $query = "INSERT INTO todo ('$taskDescription','$user_id')";
 
     $result = mysqli_query($conn, $query);
 
@@ -406,6 +406,41 @@ if(isset($_POST['addNewToDo'])){
         redirect("todo.php", "Failed to add to do");
     }
 }
+
+
+function getToDo($id){
+    
+    $query = "SELECT todo.id,
+    todo.description,
+    employees.id
+    FROM todo
+    JOIN employees ON todo.user_id = users.id where todo.id = '$id' LIMIT 1";
+
+    $results = mysqli_query($conn, $query);
+
+      if($results){
+       if (mysqli_num_rows($results) == 1) {
+          $rows = mysqli_fetch_assoc($results);
+          
+          return [
+            'status' => '200',
+            'message' => 'Fetched Data',
+            'data' => $rows
+          ];
+         } else{
+            return [
+                'status' => '404',
+                'message' => 'Not Found'
+            ];
+         }
+      }else{
+            redirect("todo.php", "Something went wrong");
+        }
+ 
+}
+
+ 
+
 
 /*function getConversation()
 {
