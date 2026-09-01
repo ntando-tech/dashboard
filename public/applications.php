@@ -273,7 +273,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Id</th>
-                                    <!-- <th>Full Name</th> -->
+                                    <th>Full Name</th>
                                     <th>Grade</th>
                                     <!-- <th>Email</th> -->
                                     <th>Status</th>
@@ -293,7 +293,16 @@
                                 <tr>
                                     <td><input type="checkbox" /></td>
                                 <td><?=$applicationItem['id'];?></td>
-                                <!-- <td><?=$applicationItem['firstname'];?></td> -->
+
+
+                                <?php 
+                                $applicationn = getUserApplicationById($applicationItem['id']); 
+                                if($applicationn['status'] == 200){
+                                ?>
+                                <td><?=$applicationn['data']['firstname'].' '.$applicationn['data']['lastname'];?></td>
+                                <?php } ?>
+
+
                                 <td><?=$applicationItem['grade'];?></td>
                                 <!-- <td><?=$applicationItem['email'];?></td> -->
                                 <td><?=$applicationItem['status'];?></td>
