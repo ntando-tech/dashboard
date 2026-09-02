@@ -390,21 +390,56 @@ function getAllDeletedAccounts($tablename){
 
 }
 
-if(isset($_POST['addNewToDoBtn'])){
+if(isset($_GET['addNewToDoBtn'])){
 
     global $conn;
-    $currentEmployee = validate($_POST['employee_id']);
-    $taskDescription = validate($_POST['description']);
+    $currentEmployee = htmlspecialchars(validate($_GET['employee_id']), ENT_QUOTES) ;
+    $taskDescription = htmlspecialchars(validate($_GET['todoDescription'], ENT_QUOTES));
 
-    $query = "INSERT INTO todo ('$taskDescription','$currentEmployee')";
+    $query = "INSERT INTO todo (todoDescription, employee_id) VALUES ('$taskDescription','$currentEmployee')";
 
     $result = mysqli_query($conn, $query);
 
     if($result){
-        redirect("todo.php","To do was added successfully");
+        redirect("../todo.php","To do was added successfully");
     }
     else{
-        redirect("todo.php", "Failed to add to do");
+        redirect("../todo.php", "Failed to add to do");
+    }
+}
+
+if(isset($_GET['editToDoBtn'])){
+
+    global $conn;
+    $todoId = validate($_GET['todo_id']);
+    $taskDescription = validate($_GET['editTodoDescription']);
+
+    $query = "UPDATE todo SET todoDescription = '$taskDescription' WHERE id ='$todoId'";
+
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        redirect("../todo.php","To do was updated");
+    }
+    else{
+        redirect("../todo.php", "Failed to add to do");
+    }
+}
+
+if(isset($_GET['deleteToDoBtn'])){
+
+    global $conn;
+    $todoId = validate($_GET['todo_id']);
+
+    $query = "DELETE FROM todo  WHERE id ='$todoId'";
+
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        redirect("../todo.php","To do was deleted");
+    }
+    else{
+        redirect("../todo.php", "Failed to delete to do");
     }
 }
 
@@ -439,6 +474,8 @@ function getToDo($id){
         }
  
 }
+
+
 
  
 

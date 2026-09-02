@@ -46,7 +46,7 @@ include("config/function.php");
         <!-- Spinner End -->
 
 
-           <!-- Sidebar Start -->
+            <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index.php" class="navbar-brand mx-4 mb-3">
@@ -57,7 +57,7 @@ include("config/function.php");
                     <div class="d-flex align-items-center ms-4 mb-4">
                         <?php if(isset($_SESSION['loggedInUser'])) {
                             $useremail = $_SESSION['loggedInUser']['email'];
-                            $user = getUserProfileImage($useremail); 
+                            $user = getProfileImage($useremail); 
                             if(mysqli_num_rows($user) > 0) {
                                 foreach($user as $userItem){
                                     if($userItem['profile_image'] != 'default_pic.jpg'){?>
@@ -66,7 +66,7 @@ include("config/function.php");
                             <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                         </div>
                         <div class="ms-3" class="profilesetting">
-                            <h6 class="mb-0"><?= $_SESSION['loggedInUser']['username'];?></h6>
+                            <h6 class="mb-0"><?= $_SESSION['loggedInUser']['firstname'];?></h6>
                             <span><?= $_SESSION['loggedInUser']['role']; ?></span>
                         </div>
                         <?php } else{?>
@@ -93,7 +93,7 @@ include("config/function.php");
 
 
                <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="users.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Users</a>
                     <a href="applications.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Applications</a>
                     <a href="employees.php" class="nav-item nav-link"><i class="fas fa-user-friends"></i>Employees</a>
@@ -268,21 +268,24 @@ include("config/function.php");
                                 <input class="form-control bg-transparent" type="text" placeholder="Search To Do"/>
                                 <button  onclick="showtodocontent('addtodotab');"  class="btn btn-primary ms-2">Add</button>
                             </div>
+
+                            <!--Show Few ToDo -->
                             <?php
                             $todoList = getAll('todo');
+                            $loopNum =1;
                                 if(mysqli_num_rows($todoList) > 0){
 
-                                foreach($todoList as $todo){?>
+                                foreach($todoList as $todo){
+                                    if($loopNum <= 4){?>
                                  <div class="d-flex align-items-center border-bottom py-2">
                                 <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
+                                <a href="#" onclick="editToDo('<?= $todo['id'];?>','<?= $todo['todoDescription'];?>'); return false;" class="w-100 ms-3" >
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><?= substr($todo['description'],0,60); ?>...... </span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                        <span><?= substr($todo['todoDescription'],0,60); ?>...... </span>
                                     </div>
-                                </div>
+                                </a>
                                 </div> 
-                                <?php } } else{ ?>
+                                <?php ++$loopNum; } else {break;} } } else{ ?>
                             
                             <div class="d-flex align-items-center border-bottom py-2">
                                 <input class="form-check-input m-0" type="checkbox">
@@ -309,12 +312,43 @@ include("config/function.php");
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
                                     <form action="config/function.php">
-                                    <input type="text" name="employee_id" hidden value="<?= $_SESSION['loggedInUser']['id'];?>"/>
-                                    <textarea rows="7" cols="45"> </textarea>
+                                    <!-- <input type="hidden" name="employee_id"  value="<?= $_SESSION['loggedInUser']['id'];?>"/> -->
+                                     <input type="text" hidden name="employee_id" value="1">
+                                    <textarea name="todoDescription" rows="7" cols="45"> </textarea>
                                     </div><br>
                                     <div class="d-flex w-100 align-items-center justify-content-between">
                                 <button type="reset" class="btn btn-warning">Clear</button>
                                 <button type="submit" name="addNewToDoBtn" class="btn btn-primary">Save</button>    
+                            </div>
+                                </form>
+                                </div>
+                                </div> 
+
+                        </div>
+
+                         <!--Edit  todo -->
+                        <div class="h-100 bg-light rounded p-4" id="edittodotab">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Edit To Do</h6>
+                                <a type="button" onclick="showtodocontent('showalltodotab');" class="text-primary">Show All</a>
+                            </div>
+                            <!-- <input type="hidden" id="editTodoId" > -->
+                            <div class="d-flex mb-2">
+                                <input class="form-control bg-transparent" type="text" placeholder="Search To Do">
+                                <button type="button" class="btn btn-primary ms-2">Home</button>
+                            </div>
+                           <div class="d-flex align-items-center border-bottom py-2">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <form action="config/function.php">
+                                        <!-- <input type="text" hidden name="employee_id" value="1"> -->
+                                     <input type="text" hidden name="todo_id" id="editTodoId" value="1">
+                                    <textarea name="editTodoDescription" id="editTodoDescriptionId" rows="7" cols="45"> </textarea>
+                                    </div><br>
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                <button type="reset" class="btn btn-warning">Clear</button>
+                                <button type="submit" name="deleteToDoBtn" class="btn btn-danger">Delete</button>
+                                <button type="submit" name="editToDoBtn" class="btn btn-primary">Save</button>    
                                 </div>
                                 </form>
                                 </div>
@@ -337,14 +371,13 @@ include("config/function.php");
                                 if(mysqli_num_rows($todoList) > 0){
 
                                 foreach($todoList as $todo){?>
-                                 <div class="d-flex align-items-center border-bottom py-2">
+                                    <div class="d-flex align-items-center border-bottom py-2">
                                 <input class="form-check-input m-0" type="checkbox">
-                                <div class="w-100 ms-3">
+                                <a href="#" onclick="editToDo('<?= $todo['id'];?>','<?= $todo['todoDescription'];?>'); return false;" class="w-100 ms-3" >
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><?= substr($todo['description'],0,60); ?>...... </span>
-                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                        <span><?= substr($todo['todoDescription'],0,60); ?>...... </span>
                                     </div>
-                                </div>
+                                </a>
                                 </div> 
                                 <?php } } else{ ?>
                             
@@ -411,7 +444,7 @@ include("config/function.php");
 document.getElementById("showfewtodotab").style.display="block";
 document.getElementById("addtodotab").style.display = "none";
 document.getElementById("showalltodotab").style.display = "none";
-
+document.getElementById("edittodotab").style.display = "none";
         </script> 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
