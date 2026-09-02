@@ -53,6 +53,7 @@ if(isset($_POST['loginBtn']))
                     $_SESSION['auth']=true;
                     $_SESSION['loggedInUserRole']= $row['role'];
                     $_SESSION['loggedInUser']=[
+                    'id' => $row['id'],
                      'firstname' =>  $row['firstname'],
                      'lastname' => $row['lastname'],
                      'profile_image' => $row['profile_image'],

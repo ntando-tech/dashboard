@@ -390,12 +390,13 @@ function getAllDeletedAccounts($tablename){
 
 }
 
-if(isset($_POST['addNewToDo'])){
+if(isset($_POST['addNewToDoBtn'])){
 
     global $conn;
+    $currentEmployee = validate($_POST['employee_id']);
     $taskDescription = validate($_POST['description']);
 
-    $query = "INSERT INTO todo ('$taskDescription','$user_id')";
+    $query = "INSERT INTO todo ('$taskDescription','$currentEmployee')";
 
     $result = mysqli_query($conn, $query);
 

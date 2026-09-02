@@ -259,14 +259,78 @@ include("config/function.php");
                 <div class="row g-4">
  
                     <div class="col-sm-12 col-md-6 col-xl-6">
-                        <div class="h-100 bg-light rounded p-4">
+                        <div class="h-100 bg-light rounded p-4" id="showfewtodotab">
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <h6 class="mb-0">To Do List</h6>
+                                <a type="button" onclick="showtodocontent('showalltodotab');" class="text-primary">Show All</a>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <input class="form-control bg-transparent" type="text" placeholder="Search To Do"/>
+                                <button  onclick="showtodocontent('addtodotab');"  class="btn btn-primary ms-2">Add</button>
+                            </div>
+                            <?php
+                            $todoList = getAll('todo');
+                                if(mysqli_num_rows($todoList) > 0){
+
+                                foreach($todoList as $todo){?>
+                                 <div class="d-flex align-items-center border-bottom py-2">
+                                <input class="form-check-input m-0" type="checkbox">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span><?= substr($todo['description'],0,60); ?>...... </span>
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                                </div> 
+                                <?php } } else{ ?>
+                            
+                            <div class="d-flex align-items-center border-bottom py-2">
+                                <input class="form-check-input m-0" type="checkbox">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                        <span>No Todo..</span>
+                                        <button class="btn btn-sm"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div> <?php } ?>
+                        </div>
+
+                        <!--add todo -->
+                        <div class="h-100 bg-light rounded p-4" id="addtodotab">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Add List</h6>
+                                <a type="button" onclick="showtodocontent('showalltodotab');" class="text-primary">Show All</a>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <input class="form-control bg-transparent" type="text" placeholder="Search To Do">
+                                <button type="button" class="btn btn-primary ms-2">Home</button>
+                            </div>
+                           <div class="d-flex align-items-center border-bottom py-2">
+                                <div class="w-100 ms-3">
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                    <form action="config/function.php">
+                                    <input type="text" name="employee_id" hidden value="<?= $_SESSION['loggedInUser']['id'];?>"/>
+                                    <textarea rows="7" cols="45"> </textarea>
+                                    </div><br>
+                                    <div class="d-flex w-100 align-items-center justify-content-between">
+                                <button type="reset" class="btn btn-warning">Clear</button>
+                                <button type="submit" name="addNewToDoBtn" class="btn btn-primary">Save</button>    
+                                </div>
+                                </form>
+                                </div>
+                                </div> 
+
+                        </div>
+
+                        <!--Show all todos -->
+                        <div class="h-100 bg-light rounded p-4" id="showalltodotab">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">All ToDo List</h6>
                                 <a href="">Show All</a>
                             </div>
                             <div class="d-flex mb-2">
-                                <input class="form-control bg-transparent" type="text" placeholder="Enter task">
-                                <button type="button" class="btn btn-primary ms-2">Add</button>
+                                <input class="form-control bg-transparent" type="text" placeholder="Search To Do">
+                                <button type="button" onclick="showtodocontent('addtodotab');" class="btn btn-primary ms-2">Add</button>
                             </div>
                             <?php
                             $todoList = getAll('todo');
@@ -343,6 +407,12 @@ include("config/function.php");
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
+     <script>
+document.getElementById("showfewtodotab").style.display="block";
+document.getElementById("addtodotab").style.display = "none";
+document.getElementById("showalltodotab").style.display = "none";
+
+        </script> 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 

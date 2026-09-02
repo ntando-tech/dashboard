@@ -202,7 +202,22 @@
         }
     });
 
-
     
 })(jQuery);
+
+
+document.getElementById("showfewtodotab").style.display="block";
+document.getElementById("addtodotab").style.display = "none";
+document.getElementById("showalltodotab").style.display = "none";
+
+function showtodocontent(id){
+document.getElementById("showfewtodotab").style.display="none";
+document.getElementById("addtodotab").style.display = "none";
+document.getElementById("showalltodotab").style.display = "none";
+
+document.getElementById(id).style.display="block";
+
+}
+
+
 
