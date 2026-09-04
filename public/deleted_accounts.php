@@ -1,4 +1,4 @@
-<?php include("config/function.php"); $tablename="";?>
+<?php include("config/function.php");?>
 
 
 <!DOCTYPE html>
