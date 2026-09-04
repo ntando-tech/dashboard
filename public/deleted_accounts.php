@@ -1,4 +1,4 @@
-<?php include("config/function.php"); ?>
+<?php include("config/function.php"); $tablename="";?>
 
 
 <!DOCTYPE html>
@@ -260,7 +260,18 @@
                     <div class="card-header">
                         <h4>
                             Deleted Accounts
-                            <a href="users_create.php" class="btn btn-primary float-end">Add Users</a>
+                           <!-- <a href="users_create.php" class="btn btn-primary float-end">Add Users</a> -->
+                        <form method="GET" class="btn btn-primary float-end">
+                        <select name="selectedTable" onchange="this.form.submit()">
+                            <option value="users" <?= ($_GET["selectedTable"] ?? "users") === "users" ? "selected" : "" ?>>
+                                Users
+                            </option>
+
+                            <option value="employees" <?= ($_GET["selectedTable"] ?? "users") === "employees" ? "selected" : "" ?>>
+                                Employees
+                            </option>
+                        </select>
+                        </form>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -274,8 +285,6 @@
                                     <th>Id</th>
                                     <th>F_Name</th>
                                     <th>L_Name</th>
-                                    <th>Id_Number</th>
-                                    <th>Phy_Address1</th>
                                     <th>Email</th>
                                     <th>Phone</th>
                                     <th>Role</th>
@@ -286,7 +295,7 @@
                             <tbody>
 
                             <?php
-                            $users = getAll('deleted_accounts');
+                            $users = getAllDeletedAccounts($_GET["selectedTable"] ?? "users");
                             if(mysqli_num_rows($users) > 0)
                             {
                             foreach($users as $userItem)
@@ -297,12 +306,10 @@
                                 <td><?=$userItem['id'];?></td>
                                 <td><?=$userItem['firstname'];?></td>
                                 <td><?=$userItem['lastname'];?></td>
-                                <td><?=$userItem['idnumber'];?></td>
-                                <td><?=$userItem['physical_address1'];?></td>
                                 <td><?=$userItem['email'];?></td>
                                 <td><?=$userItem['phone'];?></td>
                                 <td><?=$userItem['role'];?></td>
-                                <td><?=$userItem['is_ban'] == 1 ? 'Banner' : 'Active'; ?></td>
+                                <td><?=$userItem['is_ban'] == 1 ? 'Banned' : 'Active'; ?></td>
                                 <td>
                                     <a href="deleted_account_info.php?id=<?=$userItem['id'];?>" class="btn btn-success btn-sm">View Info</a>
                                 </td>
