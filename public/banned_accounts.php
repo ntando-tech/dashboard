@@ -97,14 +97,14 @@
 
 
                <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="users.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Users</a>
                     <a href="applications.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Applications</a>
                     <a href="employees.php" class="nav-item nav-link"><i class="fas fa-user-friends"></i>Employees</a>
                     <a href="tasks.php" class="nav-item nav-link"><i class="fa fa-tasks me-2"></i>Tasks</a>
                     <a href="todo.php" class="nav-item nav-link"> <i class="fas fa-sign-out-alt"></i>To Do</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Accounts</a>
+                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Accounts</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="banned_accounts" class="dropdown-item">Banned Accounts</a>
                             <a href="delete_account_request" class="dropdown-item">Deletion Request</a>
@@ -263,7 +263,11 @@
                     <div class="card-header">
                         <h4>
                             Banned Accounts
-                            <a href="users_create.php" class="btn btn-primary float-end">Add Users</a>
+                            <form method="GET" class="btn btn-primary float-end">
+                                <select name="selectedTable" onchange="this.form.submit()">
+                                    <option value="users" <?=($_GET['selectedTable'] ?? 'users') === 'users' ? 'selected' : ''  ?> >Users</option>
+                                    <option value="employees" <?= ($_GET['selectedTable'] ?? 'users') === 'employees' ? 'selected' : '' ?> >Employeers</option>
+                                </select>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -286,7 +290,7 @@
                             <tbody>
 
                             <?php
-                            $users = getAllBannedAccounts('users');
+                            $users = getAllBannedAccounts(validate($_GET['selectedTable'] ?? 'users'));
                             if(mysqli_num_rows($users) > 0)
                             {
                             foreach($users as $userItem)
@@ -301,7 +305,7 @@
                                 <td><?=$userItem['role'];?></td>
                                 <td><?=$userItem['is_ban'] == 1 ? 'Banner' : 'Active'; ?></td>
                                 <td>
-                                    <a href="deleted_account_restored.php?id=<?=$userItem['id'];?>" class="btn btn-success btn-sm">Restore</a>
+                                    <a href="banned_account_info.php?id=<?=$userItem['id'];?>&tablename-<?=$_GET['selectedTable'];?>" class="btn btn-success btn-sm">Restore</a>
                                     <a href="permanently_delete_account.php?id=<?=$userItem['id'];?>" 
                                     class="btn btn-danger btn-sm mx-2"
                                     onclick="return confirm('Are you sure you want to Permanetly Delete <?=$userItem['firstname'].' '.$userItem['lastname'];?>\'s Account?')"
