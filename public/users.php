@@ -260,7 +260,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>
-                            Employees List
+                            Users List
                             <a href="users_create.php" class="btn btn-primary float-end">Add Users</a>
                         </h4>
                     </div>
@@ -268,7 +268,7 @@
 
                     <!-- <?= alertMessage();?>--> 
 
-                        <table id="employeestable" class="table table-bordered table-striped">
+                        <table id="userstable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th></th>
