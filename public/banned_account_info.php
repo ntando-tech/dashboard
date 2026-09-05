@@ -1,12 +1,11 @@
 <?php include("config/function.php"); ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>Banned Accounts</title>
+    <title>Delete Account Info</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -32,10 +31,6 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-
-    <!--Datatable stylesheet-->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"/>
-
 </head>
 
 <body>
@@ -50,7 +45,7 @@
 
 
 
-                 <!-- Sidebar Start -->
+                  <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="index.php" class="navbar-brand mx-4 mb-3">
@@ -97,16 +92,14 @@
 
 
                <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="users.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Users</a>
                     <a href="applications.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Applications</a>
                     <a href="employees.php" class="nav-item nav-link"><i class="fas fa-user-friends"></i>Employees</a>
                     <a href="tasks.php" class="nav-item nav-link"><i class="fa fa-tasks me-2"></i>Tasks</a>
-                    <a href="todo.php" class="nav-item nav-link"> <i class="fas fa-sign-out-alt"></i>To Do</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Accounts</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Accounts</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="banned_accounts" class="dropdown-item">Banned Accounts</a>
                             <a href="delete_account_request" class="dropdown-item">Deletion Request</a>
                             <a href="deleted_accounts" class="dropdown-item">Deleted Accounts</a>
                         </div>
@@ -262,78 +255,113 @@
                 <div class="card">
                     <div class="card-header">
                         <h4>
-                            Banned Accounts
-                            <form method="GET" class="btn btn-primary float-end">
-                                <select name="selectedTable" onchange="this.form.submit()">
-                                    <option value="users" <?=($_GET['selectedTable'] ?? 'users') === 'users' ? 'selected' : ''  ?> >Users</option>
-                                    <option value="employees" <?= ($_GET['selectedTable'] ?? 'users') === 'employees' ? 'selected' : '' ?> >Employeers</option>
-                                </select>
+                            Banned Account Info
+                            <a href="banned_accounts.php" class="btn btn-primary float-end">Back</a>
                         </h4>
                     </div>
                     <div class="card-body">
-
-                    <!-- <?= alertMessage();?>--> 
-
-                        <table id="bannedUsersAccounts" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Id</th>
-                                    <th>F_Name</th>
-                                    <th>L_Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Is_Ban</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    
+                        <form action="admin/code.php" method="POST">
 
                             <?php
-                            $users = getAllBannedAccounts(validate($_GET['selectedTable'] ?? 'users'));
-                            if(mysqli_num_rows($users) > 0)
-                            {
-                            foreach($users as $userItem)
-                            {
+                              $paramResult = checkParamId('id');
+                              if(!is_numeric($paramResult))
+                              {
+                                echo '<h5>'.$paramResult.'</h5>';
+                                return false;
+                              }
+
+                              $user = getById(checkParamId('tablename'),checkParamId('id'));
+                              if($user['status']== 200)
+                              {
                                 ?>
-                                <tr>
-                                    <td><input type="checkbox" /></td>
-                                <td><?=$userItem['id'];?></td>
-                                <td><?=$userItem['firstname'];?></td>
-                                <td><?=$userItem['lastname'];?></td>
-                                <td><?=$userItem['email'];?></td>
-                                <td><?=$userItem['role'];?></td>
-                                <td><?=$userItem['is_ban'] == 1 ? 'Banner' : 'Active'; ?></td>
-                                <td>
-                                    <a href="banned_account_info.php?id=<?=$userItem['id'];?>&tablename=<?=$_GET['selectedTable'] ?? 'users';?>" class="btn btn-success btn-sm">Restore</a>
-                                    <a href="permanently_delete_account.php?id=<?=$userItem['id'];?>" 
-                                    class="btn btn-danger btn-sm mx-2"
-                                    onclick="return confirm('Are you sure you want to Permanetly Delete <?=$userItem['firstname'].' '.$userItem['lastname'];?>\'s Account?')"
-                                    >Delete</a>
-                                </td>
-                            </tr>
 
-                            <?php
-                        }
-                        }
-                        else
-                        {
-                        ?>
-                        <tr>
-                            <td colspan="7">No Record Found</td>
-                        </tr>
-                        <?php
-                        }
-                        ?>
-                            </tbody>
-                        </table>
-              
+
+                        <input type="hidden" name="userId" value="<?= $user['data']['id']; ?>" required>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>First Name</label>
+                                        <input type="text" name="firstname" value="<?= $user['data']['firstname'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Last Name</label>
+                                        <input type="text" name="lastname"  value="<?= $user['data']['lastname'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Phone Number</label>
+                                        <input type="text" name="phone"  value="<?= $user['data']['phone'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Role</label>
+                                        <input type="text" name="role" value="<?= $user['data']['role'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Created At</label>
+                                        <input type="text" name="phone"  value="<?= $user['data']['created_date'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Deleted At</label>
+                                        <input type="text" name="phone"  value="<?= $user['data']['deleted_at'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
+
+                              <div class="d-flex justify-content-between">
+                                    <div class="col-md-4">
+                                <div class="mb-3 ">
+                                    <br>
+                                    <button type="reset" name="restoreUser"  class="btn btn-success">Restore</button>
+                                </div>
+                                </div>
+                                 <div class="col-md-4">
+                                <div class="mb-3">
+                                    <br>
+                                    <button type="submit" name="deleteUser" class="btn btn-danger">Delete</button>
+                                </div>
+                                    </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <br>
+                                    <button type="submit" name="updateUser" disabled class="btn btn-primary">Update</button>
+                                <!-- </div> -->
+                                </div>
+                                    </div>
+                                
+                        </div>
+
+                                <?php
+                              }
+                              else
+                              {
+                                echo '<h5>'.$user['message'].'</h5>';
+                              }
+
+
+                            ?>
+                 
+
+                        
+                        </form>
+                        
                     </div>
                 </div>
             </div>
 
             </div>
-                
 
 
             <!-- Footer Start -->
@@ -359,8 +387,6 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-
-
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -372,23 +398,8 @@
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-<!-- Datatable Javascript -->
-      <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
-<script src="js/datatablecode.js"></script>
-
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <!-- Refresh the page
-<script src="js/refreshpage.js" defer></script> -->
-
-    <!-- theme switch js (light and dark)-->
-    <script src="js/changetheme.js"></script>
-    <!-- //theme switch js (light and dark)-->
-
 </body>
 
 </html>
-
-?>
