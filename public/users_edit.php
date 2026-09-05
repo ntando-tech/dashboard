@@ -283,6 +283,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label>First Name</label>
+                                         <input type="text" hidden name="userId" value="<?= $user['data']['id'];?>" class="form-control">
                                         <input type="text" name="firstname"  value="<?= $user['data']['firstname'];?>" required class="form-control">
                                     </div>
                                 </div>
@@ -323,7 +324,7 @@
                                 <div class="mb-3">
                                     <label>Select Role</label>
                                     <select name="role" required class="form-select">
-                                    <option value="<?php $user['data']['role'];?>" selected> User </option>
+                                    <option value="<?= $user['data']['role'];?>" selected> User </option>
                                       </select>
                                 </div>
                             </div>

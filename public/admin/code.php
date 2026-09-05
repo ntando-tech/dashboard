@@ -93,12 +93,8 @@ if(isset($_POST['updateUser']))
 
     $firstname = validate($_POST['firstname']);
     $lastname = validate($_POST['lastname']);
-    $idnumber = validate($_POST['idnumber']);
-   $homeaddress = validate($_POST['homeaddress']);
     $phone = validate($_POST['phone']);
     $email = validate($_POST['email']);
-    $password = validate($_POST['password']);
-    $cpassword = validate($_POST['cpassword']);
     $role = validate($_POST['role']);
     $profile_image = validate($_POST['profile_image']);
     $is_ban = validate($_POST['is_ban']) == true ? 1:0;
@@ -112,20 +108,15 @@ if(isset($_POST['updateUser']))
         redirect('../users_edit.php?id='.$userId,'No Such Id Found');
     }
 
-    if($firstname != '' || $lastname != '' || $phone != '' || $email != ''|| $profile_image != '' || $password != '')
+    if($firstname != '' || $lastname != '' || $phone != '' || $email != ''|| $profile_image != '')
     {
-
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
         $query = "UPDATE users SET 
         firstname='$firstname',
         lastname='$lastname',
-        idnumber='$idnumber',
         phone='$phone',
         email='$email',
-        home_address='$homeaddress',
         profile_image='$profile_image',
-        password='$hashedPassword',
         role='$role',
         is_ban='$is_ban'
          WHERE id='$userId'";

@@ -375,7 +375,7 @@
 
 <!-- Datatable Javascript -->
       <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
+     <script src="https ://cdn.datatables.net/1.13.4/js/dataTables.bootstrap.min.js"></script>
 <script src="js/datatablecode.js"></script>
 
     <!-- Template Javascript -->

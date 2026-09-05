@@ -97,8 +97,8 @@
 
 
                <div class="navbar-nav w-100">
-                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="users.php" class="nav-item nav-link"><i class="fa fa-users me-2"></i>Users</a>
+                    <a href="index.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="users.php" class="nav-item nav-link active"><i class="fa fa-users me-2"></i>Users</a>
                     <a href="applications.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Applications</a>
                     <a href="employees.php" class="nav-item nav-link"><i class="fas fa-user-friends"></i>Employees</a>
                     <a href="tasks.php" class="nav-item nav-link"><i class="fa fa-tasks me-2"></i>Tasks</a>
@@ -297,7 +297,7 @@
                                 <td><?=$userItem['lastname'];?></td>
                                 <td><?=$userItem['email'];?></td>
                                 <td><?=$userItem['role'];?></td>
-                                <td><?=$userItem['is_ban'] == 1 ? 'Banner' : 'Active'; ?></td>
+                                <td><?=$userItem['is_ban'] == 1 ? 'Banned' : 'Active'; ?></td>
                                 <td>
                                     <a href="users_edit.php?id=<?=$userItem['id'];?>" class="btn btn-success btn-sm">Edit</a>
                                     <a href="user_delete.php?id=<?=$userItem['id'];?>" 
