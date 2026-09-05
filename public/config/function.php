@@ -477,7 +477,28 @@ function getToDo($id){
 
 
 
- 
+ if(isset($_POST['createTicketBtn'])){
+
+    global $conn;
+    $fullName = validate($_POST['fullName']);
+    $email = validate($_POST['email']);
+    $subject = validate($_POST['subject']);
+    $description = validate($_POST['description']);
+    $ticket_status = validate($_POST['ticket_status']);
+    $priority = validate($_POST['priority']);
+    $created_by = validate($_POST['created_by']);
+
+    $query = "INSERT INTO tickets (fullName,email,subject,description,ticket_status,priority,created_by)
+    VALUES ('$fullName','$email','$subject','$description','$ticket_status','$priority','$created_by')";
+
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        redirect("../tickets.php", "New Ticket was created");
+    }else{
+        redirect("../ticket_create.php", "Failed to create new ticket");
+    }
+ }
 
 
 /*function getConversation()
