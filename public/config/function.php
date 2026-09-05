@@ -500,6 +500,24 @@ function getToDo($id){
     }
  }
 
+ if(isset($_POST['updateTicket'])){
+
+ global $conn;
+
+ $ticketId = validate($_POST['ticketId']);
+ $ticket_status = validate($_POST['ticket_status']);
+ $priority = validate($_POST['priority']);
+
+ $query = "UPDATE tickets SET ticket_status='$ticket_status', priority='$priority' WHERE id='$ticketId' ";
+
+ $result = mysqli_query($conn, $query);
+ if($result){
+    redirect("../tickets.php","Ticket was updated successfully");
+ }else{
+    redirect("../ticket_edit.php?id=$ticketId","Failed to update the ticket");
+ }
+ }
+
 
 /*function getConversation()
 {
