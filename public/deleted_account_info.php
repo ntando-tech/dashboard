@@ -256,7 +256,7 @@
                     <div class="card-header">
                         <h4>
                             Account Info
-                            <a href="deleted_accounts.php" class="btn btn-danger float-end">Back</a>
+                            <a href="deleted_accounts.php" class="btn btn-primary float-end">Back</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -271,7 +271,7 @@
                                 return false;
                               }
 
-                              $user = getById('deleted_accounts',checkParamId('id'));
+                              $user = getById(checkParamId('tablename'),checkParamId('id'));
                               if($user['status']== 200)
                               {
                                 ?>
@@ -283,79 +283,78 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>First Name</label>
-                                        <input type="text" name="firstname" value="<?= $user['data']['firstname'];?>" required class="form-control">
+                                        <input type="text" name="firstname" value="<?= $user['data']['firstname'];?>" readonly required class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Last Name</label>
-                                        <input type="text" name="lastname"  value="<?= $user['data']['lastname'];?>" required class="form-control">
+                                        <input type="text" name="lastname"  value="<?= $user['data']['lastname'];?>" readonly required class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>ID Number</label>
-                                        <input type="text" name="idnumber"  value="<?= $user['data']['idnumber'];?>" required class="form-control">
+                                        <input type="text" name="idnumber"  value="<?= $user['data']['idnumber'];?>" readonly required class="form-control">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Phone Number</label>
-                                        <input type="text" name="phone"  value="<?= $user['data']['phone'];?>" required class="form-control">
+                                        <input type="text" name="phone"  value="<?= $user['data']['phone'];?>" readonly required class="form-control">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Physical Address</label>
-                                        <input type="text" name="physicaladdress1"  value="<?= $user['data']['physical_address1'];?>" required class="form-control">
+                                        <input type="text" name="physicaladdress1"  value="<?= $user['data']['physical_address1'];?>" readonly required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>City</label>
-                                        <input type="text" name="city1"  value="<?= $user['data']['city1'];?>"  required class="form-control">
+                                        <input type="text" name="city1"  value="<?= $user['data']['city1'];?>" readonly  required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Zip Code</label>
-                                        <input type="text" name="zip_code1"  value="<?= $user['data']['zip_code1'];?>" required class="form-control">
+                                        <input type="text" name="zip_code1"  value="<?= $user['data']['zip_code1'];?>" readonly required class="form-control">
                                     </div>
                                 </div>
                  
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Email</label>
-                                        <input type="text" name="email" value="<?= $user['data']['email'];?>" required class="form-control">
+                                        <input type="text" name="email" value="<?= $user['data']['email'];?>" readonly required class="form-control">
                                     </div>
-                                </div>
+                                </div> -->
   
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Role</label>
-                                        <input type="text" name="role" value="<?= $user['data']['role'];?>" required class="form-control">
+                                        <input type="text" name="role" value="<?= $user['data']['role'];?>" readonly required class="form-control">
                                     </div>
                                 </div>
 
-                            <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label>Is Ban</label>
-                                    <br>
-                                    <input type="checkbox" name="is_ban" <?= $user['data']['is_ban'] == true? 'checked' : '';?> style="width:30px;height:30px"/>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Created At</label>
+                                        <input type="text" name="phone"  value="<?= $user['data']['created_date'];?>" readonly required class="form-control">
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label>Deleted At</label>
+                                        <input type="text" name="phone"  value="<?= $user['data']['deleted_at'];?>" readonly required class="form-control">
+                                    </div>
+                                </div>
 
                             
-                            <div class="col-md-4">
-                                <div class="mb-3 text-end">
-                                    <br>
-                                    <button type="submit" name="updateUser" class="btn btn-primary">Update</button>
-                                </div>
-                            </div>
                                 
                         </div>
 

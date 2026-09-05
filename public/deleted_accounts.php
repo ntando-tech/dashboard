@@ -311,7 +311,7 @@
                                 <td><?=$userItem['role'];?></td>
                                 <td><?=$userItem['is_ban'] == 1 ? 'Banned' : 'Active'; ?></td>
                                 <td>
-                                    <a href="deleted_account_info.php?id=<?=$userItem['id'];?>" class="btn btn-success btn-sm">View Info</a>
+                                    <a href="deleted_account_info.php?id=<?=$userItem['id'];?>&tablename=<?= $_GET['selectedTable'] ?? 'users' ?>" class="btn btn-success btn-sm">View Info</a>
                                 </td>
                             </tr>
 
