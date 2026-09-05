@@ -293,7 +293,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'admin')
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Tickets</p>
-                                <h6 class="mb-0">Number Of Tickets: 20</h6>
+                                <h6 class="mb-0">Number Of Tickets: <?=countNoOfRecords("tickets"); ?></h6>
                             </div>
                         </div>
                     </a>
