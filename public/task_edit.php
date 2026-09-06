@@ -255,7 +255,7 @@
                     <div class="card-header">
                         <h4>
                             Edit Task
-                            <a href="task-create.php" class="btn btn-danger float-end">Back</a>
+                            <a href="tasks.php" class="btn btn-primary float-end">Back</a>
                         </h4>
                     </div>
                     <div class="card-body">
@@ -270,7 +270,7 @@
                                 return false;
                               }
 
-                              $task = getById('tasks',checkParamId('id'));
+                              $task = getById('tasksss',checkParamId('id'));
                               if($task['status']== 200)
                               {
                                 ?>
@@ -281,60 +281,79 @@
                         <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Task Name</label>
+                                        <h6>Task Name</h6>
                                         <input type="text" name="task_name" value="<?= $task['data']['task_name'];?>" required class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label>Client</label>
-                                        <input type="text" name="client"  value="<?= $task['data']['client'];?>" required class="form-control">
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Team Members</label>
-                                        <input type="text" name="team_members"  value="<?= $task['data']['team_members'];?>" required class="form-control">
+                                        <h6>Team Members</h6>
+                                        <input type="text" name="users_assigned"  value="<?= $task['data']['users_assigned'];?>" required class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label>Task Description</label>
-                                        <input type="text" name="task_description"  value="<?= $task['data']['task_description'];?>" required class="form-control">
+                                        <br>
+                                        <h6>Task Description</h6>
+                                        <textarea  name="task_description" class="form-control"> <?= $task['data']['task_description'];?> </textarea>
                                     </div>
                                 </div>
-  
-                                <div class="col-md-6"> 
-                                    <div class="col-md-3">
-                                        <label>Due Date</label>
-                                        <input type="date" name="due_date" value="<?= $task['data']['due_date'];?>" required class="form-control">
-                                    </div>
-                                </div> 
 
-                            <div class="col-md-4">
+                                 <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label>Select Progress Status</label>
+                                    <br>
+                                    <h6>Note</h6>
+                                    <textarea  type="text" name="note" class="form-control"> <?= $task['data']['note'];?> </textarea>
+                                </div>
+                            </div>
+  
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <br>
+                                    <h6>Select Progress Status</h6>
                                     <select name="progress_status" required class="form-select">
-                                    <option value="begining" <?= $task['data']['progress_status'] == 'begining'? 'selected' : '';?> >Begining</option>
-                                    <option value="medium" <?= $task['data']['progress_status'] == 'medium'? 'selected' : '';?>>Medium</option>
-                                    <option value="Almost Done" <?= $task['data']['progress_status'] == 'Almost Done'? 'selected' : '';?>>Almost Done</option>
+                                    <option value="not started" <?= $task['data']['progress_status'] == 'not started'? 'selected' : '';?> >Not Started</option>
+                                    <option value="in progress" <?= $task['data']['progress_status'] == 'in progress'? 'selected' : '';?>>In Progress</option>
+                                    <option value="on hold" <?= $task['data']['progress_status'] == 'on hold'? 'selected' : '';?>>On Hold</option>
+                                    <option value="completed" <?= $task['data']['progress_status'] == 'completed'? 'selected' : '';?>>Completed</option>
+                                    <option value="cancelled" <?= $task['data']['progress_status'] == 'cancelled'? 'selected' : '';?>>Cancelled</option>
                                       </select>
                                 </div>
                             </div>
+
+                            <div class="col-md-6"> 
+                                    <div class="col-md-3">
+                                        <br>
+                                        <h6>Due Date</h6>
+                                        <input type="date" name="due_date" value="<?= $task['data']['due_date'];?>" min="<?= date('Y-m-d'); ?>"  class="form-control">
+                                    </div>
+                             </div> 
+
+                            <div class="d-flex justify-content-between mt-3">
+
                             <div class="col-md-4">
-                                <div class="mb-3">
-                                    <label>Note</label>
+                                <div class="mb-3 text-center">
                                     <br>
-                                    <input type="text" name="note" value="<?= $task['data']['note'];?>" required class="form-control">
+                                    <button type="reset"  class="btn btn-warning">Cancel</button>
                                 </div>
                             </div>
 
                             <div class="col-md-4">
-                                <div class="mb-3 text-end">
+                                <div class="mb-3 text-center">
+                                    <br>
+                                    <button type="submit" name="deleteTask" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="mb-3 text-center">
                                     <br>
                                     <button type="submit" name="updateTask" class="btn btn-primary">Update</button>
                                 </div>
+                            </div>
+
                             </div>
                                 
                         </div>
@@ -350,7 +369,6 @@
                             ?>
                  
 
-                        
                         </form>
                         
                     </div>

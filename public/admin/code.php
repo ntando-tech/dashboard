@@ -431,26 +431,23 @@ if(isset($_POST['saveTask']))
 if(isset($_POST['updateTask']))
 {
     $task_name = validate($_POST['task_name']);
-    $client = validate($_POST['client']);
-    $team_members = validate($_POST['team_members']);
+    $team_members = validate($_POST['users_assigned']);
     $task_description = validate($_POST['task_description']);
     $due_date = validate($_POST['due_date']);
     $progress_status = validate($_POST['progress_status']);
-    $hours_logged = validate($_POST['hours_logged']);
-    $status = validate($_POST['status']) == true ? 1:0;
     $note= validate($_POST['note']);
 
     $taskId = validate($_POST['taskId']);
 
-    if($name != '' || $url != '')
+    if($task_name != '' || $team_members != '')
     {
-        $query = "UPDATE tasks SET task_name='$task_name',client='$client',team_members='$team_members',task_description='$task_description',due_date='$due_date', progress_status='$progress_status', note='$note' WHERE id='$projectId' LIMIT 1";
+        $query = "UPDATE tasksss SET task_name='$task_name',users_assigned='$team_members',task_description='$task_description',due_date='$due_date', progress_status='$progress_status', note='$note' WHERE id='$taskId' LIMIT 1";
 
         $result = mysqli_query($conn,$query);
 
         if($result)
         {
-            redirect('../task.php','Task Updated Successfully');
+            redirect('../tasks.php','Task Updated Successfully');
         }
         else
         {
@@ -463,6 +460,28 @@ if(isset($_POST['updateTask']))
     {
             redirect('../task_edit.php?id='.$taskId,'Please fill all the input fields!');
     }
+}
+
+
+if(isset($_POST['deleteTask']))
+{
+
+    $taskId = validate($_POST['taskId']);
+
+
+        $query = "Delete from tasksss where id='$taskId' LIMIT 1";
+        $result = mysqli_query($conn,$query);
+
+        if($result)
+        {
+            redirect('../tasks.php','Task was deleted Successfully');
+        }
+        else
+        {
+            redirect('../task_edit.php?id='.$taskId,'Something went wrong');
+        }
+
+
 }
 
 

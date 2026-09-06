@@ -274,7 +274,7 @@
                                     <th>Id</th>
                                     <th>Task_Name</th>
                                     <th>Team_Member</th>
-                                    <th>Description</th>
+                                    <th>Task Description</th>
                                     <th>Status</th>
                                     <th>Due_Date</th>
                                     <th>Action</th>
