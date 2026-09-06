@@ -34,7 +34,7 @@ $time = $currentDateTime->format('H:i:s');
 
  if(empty($selectedPeople))
  {
-    redirect("../task_create_copy_2.php", "No Team Members Were Selected");
+    redirect("../task_create.php", "No Team Members Were Selected");
  }
  else
  {
@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $myemail22 = $row['email'];
 } else {
-    // If no result found, handle accordingly
+    // If no result found, h andle accordingly
     $myemail = null;
 }
 
@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
 
     if($personId == $userid)
     {
-        $sql = "INSERT INTO tasksss (taskname, created_by, users_assigned, task_description, due_date)
+        $sql = "INSERT INTO tasksss (task_name, created_by, users_assigned, task_description, due_date)
         VALUES ('$task_name', 'Me', '$personId', '$myemail22', '$due_date') ";
         $conn->query($sql);
     
@@ -75,7 +75,7 @@ if ($result->num_rows > 0) {
     else
     {
     // Assuming there's a notifications table with columns: id, user_id, message, read_status, created_at
-    $sql3 = "INSERT INTO tasksss (taskname,created_by, users_assigned,task_description, due_date)
+    $sql3 = "INSERT INTO tasksss (task_name,created_by, users_assigned,task_description, due_date)
     VALUES ('$task_name', '$createdby', '$personId', '$task_description','$due_date') ";
     $conn->query($sql3);
 

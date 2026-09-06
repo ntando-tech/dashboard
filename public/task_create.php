@@ -260,52 +260,39 @@
 
                       
                     <?= alertMessage(); ?> 
-                        <form id="taskForm">
+                        <form action="admin/code.php" method="post">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="taskName"><b>Task Name</b></label>
-                                        <input type="text" id="taskName" name="taskName"  required class="form-control">
+                                        <input type="text" id="taskName" name="task_name"  required class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="client">Client Name</label>
-                                        <input type="text" id="client" name="client" required class="form-control">
-                                    </div>
-                                </div>
+       
 
                                    <input hidden type="text" id="currentuserfirstname" name="currentuserfirstname" value='<?=$_SESSION["loggedInUser"]["firstname"]." ".$_SESSION["loggedInUser"]["email"]?>'  class="form-control">
 
-                                   <?php
-                                $users = getuserinfo('employees',$_SESSION["loggedInUser"]["firstname"],$_SESSION["loggedInUser"]["email"]);
-                                if(mysqli_num_rows($users) > 0)
-                                {
-                                foreach($users as $userItem)
-                                {
-                                    ?>
+     
 
-                                            <input hidden type="text" id="currentuserid" name="currentuserid" value="<?=$userItem['id'];?>" required class="form-control">
-                                            <input hidden type="text" id="currentuserfullname" name="currentuserfullname" value="<?=$userItem['firstname'].' '.$userItem['lastname'];?>" required class="form-control">
-                                    <?php
-                                }
-                            }
-                            ?>
+                                            <input hidden type="text" id="currentuserid" name="currentuserid" value="<?=$_SESSION['loggedInUser']['id'];?>" required class="form-control">
+                                            <input hidden type="text" id="currentuserfullname"  name="current_user_fullname" value="<?=$_SESSION['loggedInUser']['firstname'].' '.$_SESSION['loggedInUser']['lastname'];?>" required class="form-control">
+                 
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                    <label><b>Task Members</b></label>
-                                    <div class="people-list-container">
-                                <div class="arrow arrow-up">&#9650;</div>
-                                <br>
-                                <ul id="peopleList" class="list-group people-list">
-                                  
-                                </ul>
-                                <br>
-                                <div class="arrow arrow-down">&#9660;</div>
-                            </div>
+                                        <label for="team_members">Task Members</label>
+                                        <select type="text" id="team_members" name="team_members[]" multiple required class="form-control">
+                                         <?php 
+                                         $employees = getAll('employees');
+                                         if(mysqli_num_rows($employees) > 0){
+                                            foreach($employees as $employeeItem){?>   
+                                        <option value="<?=$employeeItem['firstname']; ?>"> <?=$employeeItem['firstname']; ?>  </option>
+                                        <?php } }?>
+                                        </select>
+                                    </div>
                                 </div>
-                                </div>
+
+
                                
 
                                 <div class="col-md-6">
@@ -315,26 +302,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="hours_logged">Hours_Logged</label>
-                                        <input type="text"  id="hours_logged" name="hours_logged" value="00:00:00" disabled class="form-control">
-                                    </div>
-                                </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="dateInput">Due Date</label>
-                                        <!-- <input type="date" name="due_date"   class="form-control"> -->
-                                        <input type="date" id="dateInput" name="dateInput" required  class="form-control">
+
+                                        <input type="date" id="dateInput" name="due_Date" required  class="form-control">
                                     </div>
                                 </div>    
                            
                             <div class="col-md-3">
                                 <div class="mb-3">
                                     <label for="progress_status">Progress Status</label>
-                                    <select id="progress_status" name="progress_status" required value='Incomplete' disabled class="form-select">
-                                    <option value="Complete">Complete</option>
+                                    <select id="progress_status" name="progress_status" required  readonly class="form-select">
+                                    <option value="Incomplete" selected>Incomplete</option>
                                       </select>
                                 </div>
                             </div>
@@ -342,7 +323,7 @@
                             <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="note">Note</label>
-                                        <input id="note" type="text" name="note" required  class="form-control">
+                                        <input id="note" type="text" name="note"  class="form-control">
                                     </div>
                                 </div>
 
@@ -358,23 +339,6 @@
                         </form>
 
                         
-                        
-                         <!-- <div class="container">
-        <h2>Select People</h2>
-        <form id="taskForm">
-            <div class="form-group">
-                <label for="taskName">Task Name</label>
-                <input type="text" id="taskName" name="taskName" class="form-control" required>
-            </div>
-            <div class="people-list-container">
-                <div class="arrow arrow-up">&#9650;</div>
-                <ul id="peopleList" class="list-group people-list">
-                </ul>
-                <div class="arrow arrow-down">&#9660;</div>
-            </div>
-            <button type="submit" id="saveBtn" class="btn btn-primary mt-3">Save Task</button>
-        </form>
-    </div>  -->
            
 
 
@@ -432,116 +396,6 @@
     </script>
 
     
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    let people = [];
-    let currentIndex = 0;
-    const itemsPerPage = 3;
-
-    const fetchPeople = async () => {
-        try {
-            const response = await fetch('config/getPeople');
-            if (!response.ok) throw new Error('Network response was not ok');
-            people = await response.json();
-            renderPeople();
-        } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
-        }
-    };
-
-    const renderPeople = () => {
-        const peopleList = document.getElementById('peopleList');
-        peopleList.innerHTML = '';
-        const endIndex = Math.min(currentIndex + itemsPerPage, people.length);
-        for (let i = currentIndex; i < endIndex; i++) {
-            const person = people[i];
-            const listItem = document.createElement('li');
-            listItem.classList.add('list-group-item', 'people-list-item');
-            listItem.innerHTML = `<img src="${person.profile_image}" alt="${person.firstname}"> ${person.firstname} ${person.lastname}`;
-            listItem.dataset.id = person.id;
-            listItem.addEventListener('click', function() {
-                listItem.classList.toggle('active');
-            });
-            peopleList.appendChild(listItem);
-        }
-        adjustArrowVisibility();
-    };
-
-    const adjustArrowVisibility = () => {
-        document.querySelector('.arrow-up').style.display = currentIndex === 0 ? 'none' : 'block';
-        document.querySelector('.arrow-down').style.display = currentIndex + itemsPerPage >= people.length ? 'none' : 'block';
-    };
-
-    const scrollUp = () => {
-        if (currentIndex > 0) {
-            currentIndex -= itemsPerPage;
-            renderPeople();
-        }
-    };
-
-    const scrollDown = () => {
-        if (currentIndex + itemsPerPage < people.length) {
-            currentIndex += itemsPerPage;
-            renderPeople();
-        }
-    };
-
-    document.querySelector('.arrow-up').addEventListener('click', scrollUp);
-    document.querySelector('.arrow-down').addEventListener('click', scrollDown);
-
-    document.getElementById('taskForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const selectedPeople = [];
-        document.querySelectorAll('.list-group-item.active').forEach(item => {
-            selectedPeople.push(item.dataset.id);
-            
-        });
-
-        const taskName = document.getElementById('taskName').value;
-        const client = document.getElementById('client').value;
-        // const currentuserfirstname = document.getElementById('currentuserfirstname').value;
-        const currentuserfullname = document.getElementById('currentuserfullname').value;
-        const currentuserid = document.getElementById('currentuserid').value;
-        const task_description = document.getElementById('task_description').value;
-        // const hours_logged = document.getElementById('hours_logged').value;
-        const dateInput = document.getElementById('dateInput').value;
-        // const progress_status = document.getElementById('progress_status').value;
-        // const note = document.getElementById('note').value;
-
-      
-        const myarray = [];
-        myarray.push(taskName);
-        myarray.push(currentuserfullname);
-        myarray.push(currentuserid);
-        myarray.push(client);
-        myarray.push(task_description);
-        myarray.push(dateInput);
-
-        
-        // alert(selectedPeople);
-
-        fetch('config/saveTask', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        //     body: JSON.stringify({client, currentuserfirstname, currentuserid, task_description, hours_logged,dateInput, progress_status,note , currentuserid, taskName,  selectedPeople }),
-        body: JSON.stringify({myarray, selectedPeople }),
-            
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-        })
-        .catch(error => {
-            console.error('There was a problem with the save task operation:', error);
-        });
-    });
-
-    fetchPeople();
-});
-</script>
 
 </body>
 

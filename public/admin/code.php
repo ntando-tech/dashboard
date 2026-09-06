@@ -385,12 +385,12 @@ if(isset($_POST['updateProject']))
 if(isset($_POST['saveTask']))
 {
     $task_name = validate($_POST['task_name']);
-    $client = validate($_POST['client']);
-    $team_members = validate($_POST['team_members']);
+ 
+    $team_members = $_POST['team_members'];
     $task_description = validate($_POST['task_description']);
-    $due_date = validate($_POST['due_date']);
-    $hours_logged = validate($_POST['hours_logged']);
-   // $status = validate($_POST['status']) == true ? 1:0;
+    $due_date = validate($_POST['due_Date']);
+    $created_by = validate($_POST['current_user_fullname']);
+   $employeeId = validate($_POST['currentuserid']) ;
    $progress_status = validate($_POST['progress_status']);
     $note= validate($_POST['note']);
 
@@ -403,10 +403,10 @@ if(isset($_POST['saveTask']))
         $optionsString = implode(',', $sanitizedOptions);
 
 
-    if($task_name != '' || $client != '' || $team_members != '' || $task_description != '' || $due_date != '' || $progress_status != '' || $hours_logged != '')
+    if($task_name != ''  || $team_members != '' || $task_description != '' || $due_date != '' || $progress_status != '')
     {
-        $query = "INSERT INTO tasks (task_name,client,team_members, task_description,due_date,progress_status,hours_logged,note)
-         VALUES ('$task_name','$client','$teammembers','$task_description','$due_date','$progress_status','$hours_logged','$hours_logged')";
+        $query = "INSERT INTO tasksss (task_name,users_assigned, task_description,due_date,progress_status,note, created_by,employee_id)
+         VALUES ('$task_name','$optionsString','$task_description','$due_date','$progress_status','$note','$created_by','$employeeId')";
 
         $result = mysqli_query($conn,$query);
 

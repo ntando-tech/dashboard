@@ -274,7 +274,7 @@
                                     <th>Id</th>
                                     <th>Task_Name</th>
                                     <th>Team_Member</th>
-                                    <th>Hours_Logged</th>
+                                    <th>Description</th>
                                     <th>Status</th>
                                     <th>Due_Date</th>
                                     <th>Action</th>
@@ -291,9 +291,9 @@
                                 ?>
                                 <tr>
                                 <td><?=$taskItem['id'];?></td>
-                                <td><?=$taskItem['taskname'];?></td>
+                                <td><?=$taskItem['task_name'];?></td>
                                 <td><?=$taskItem['users_assigned'];?></td>
-                                <td><?=$taskItem['hours_logged'];?></td>
+                                <td><?=$taskItem['task_description'];?></td>
                                 <td><?=$taskItem['progress_status'] == 1 ? 'Complete' : 'Incomplete'; ?></td>
                                 <td><?=$taskItem['due_date'];?></td>
 
