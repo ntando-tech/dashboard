@@ -312,16 +312,16 @@ include("config/function.php");
                             </div>
                             <div class="d-flex mb-2">
                                 <input class="form-control bg-transparent" type="text" placeholder="Search To Do">
-                                <button type="button" class="btn btn-primary ms-2">Home</button>
+                                <button type="button" onclick="showtodocontent('showfewtodotab');" class="btn btn-primary ms-2">Home</button>
                             </div>
                            <div class="d-flex align-items-center border-bottom py-2">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
                                     <form action="config/function.php">
-                                    <!-- <input type="hidden" name="employee_id"  value="<?= $_SESSION['loggedInUser']['id'];?>"/> -->
-                                     <input type="text" hidden name="employee_id" value="1">
-                                    <textarea name="todoDescription" rows="7" cols="45"> </textarea>
-                                    </div><br>
+              
+                                     <input type="text" hidden name="employee_id" value="<?= $_SESSION['loggedInUser']['id'];?>">
+                                 <textarea name="todoDescription" rows="7" cols="45" required> </textarea>    
+                                </div><br>
                                     <div class="d-flex w-100 align-items-center justify-content-between">
                                 <button type="reset" class="btn btn-warning">Clear</button>
                                 <button type="submit" name="addNewToDoBtn" class="btn btn-primary">Save</button>    
