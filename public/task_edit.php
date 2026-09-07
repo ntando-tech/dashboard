@@ -289,7 +289,17 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <h6>Team Members</h6>
-                                        <input type="text" name="users_assigned"  value="<?= $task['data']['users_assigned'];?>" required class="form-control">
+                                        <!-- <input type="text" name="users_assigned"  value="<?= $task['data']['users_assigned'];?>" required class="form-control"> -->
+                                         <select  class="form-control" name="users_assigned[]" multiple>
+                                         <?php  $employees = getAll('employees');
+                                         if(mysqli_num_rows($employees) > 0){
+                                            foreach($employees as $eachEmployee){?>
+                                                <option value="<?= $eachEmployee['id']?>" 
+                                                <?php if($task['data']['employee_id'] == $eachEmployee['id']){ 'hidden';}else{ /*uma umuntu owenzile itask elingana nomuntu okuma employees mufihle */
+                                                if($eachEmployee['id'] == $task['data']['users_assigned']){echo'selected';} else{echo'';} ?> > <!--uma umuntu okumaemployees elingana nomuntu  oyimember yetask yetask --->
+                                                 <?=$eachEmployee['firstname'].' '.$eachEmployee['lastname']?> </option>
+                                        <?php } } }?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

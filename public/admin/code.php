@@ -468,7 +468,7 @@ if(isset($_POST['saveTask']))
 if(isset($_POST['updateTask']))
 {
     $task_name = validate($_POST['task_name']);
-    $team_members = validate($_POST['users_assigned']);
+    $team_members = $_POST['users_assigned'];
     $task_description = validate($_POST['task_description']);
     $due_date = validate($_POST['due_date']);
     $progress_status = validate($_POST['progress_status']);
@@ -476,9 +476,17 @@ if(isset($_POST['updateTask']))
 
     $taskId = validate($_POST['taskId']);
 
+       $options = $team_members;
+
+        // Sanitize each option and convert the options array to a comma-separated string
+        $sanitizedOptions = array_map(function($option) use ($conn) {
+            return $conn->real_escape_string($option);
+        }, $options);
+        $optionsString = implode(',', $sanitizedOptions);
+
     if($task_name != '' || $team_members != '')
     {
-        $query = "UPDATE tasksss SET task_name='$task_name',users_assigned='$team_members',task_description='$task_description',due_date='$due_date', progress_status='$progress_status', note='$note' WHERE id='$taskId' LIMIT 1";
+        $query = "UPDATE tasksss SET task_name='$task_name',users_assigned='$optionsString',task_description='$task_description',due_date='$due_date', progress_status='$progress_status', note='$note' WHERE id='$taskId' LIMIT 1";
 
         $result = mysqli_query($conn,$query);
 
