@@ -282,7 +282,7 @@
                             <tbody>
 
                             <?php
-                            $task = getAll('tasksss');
+                            $task = getEmployeeTask($_SESSION['loggedInUser']['id']);
                             if(mysqli_num_rows($task) > 0)
                             {
                             foreach($task as $taskItem)
@@ -311,7 +311,7 @@
                         {
                         ?>
                         <tr>
-                            <td colspan="7">No Record Found</td>
+                            <td colspan="7">No Task Found</td>
                         </tr>
                         <?php
                         }

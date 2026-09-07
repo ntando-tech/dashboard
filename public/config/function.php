@@ -252,46 +252,14 @@ if ($result->num_rows > 0) {
 }
 
 
-function getEmployeeTask($currentUserEmail){
+function getEmployeeTask($currentUserId){
 global $conn;
 
-$currentuseremail = validate($currentUserEmail); 
-$query = "SELECT * FROM tasks where email = '$currentuserelemail'";
+$currentuserid = validate($currentUserId); 
+$query = "SELECT * FROM tasksss where employee_id = '$currentuserid' OR users_assigned = '$currentuserid' ";
 $result = mysqli_query($conn,$query);
 
-//  $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-//         $response = [
-//             'status' => 200,
-//             'message' => 'Fetched Data',
-//             'data' => $row
-//         ];
-//         return $response;
-if($result)
-    {
-        if(mysqli_num_rows($result) > 0){
-           $data = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                $response = [
-                    "status" => 200,
-                    "message" => "Fetched Data",
-                    "data" => $data
-                ];
-            return $response;
-
-        }else{
-            $response = [
-                "status"=>"404",
-                "message"=>"You have no tasks"
-            ];
-            return $response;
-        }
-    }
-else{
-    $response = [
-        "status"=> "404",
-        "message" => "Not Found"
-    ];
-    return $response;
-}
+return $result;
 
 }
 
