@@ -364,16 +364,30 @@ if(isset($_GET['addNewToDoBtn'])){
     $currentEmployee = htmlspecialchars(validate($_GET['employee_id']), ENT_QUOTES) ;
     $taskDescription = htmlspecialchars(validate($_GET['todoDescription'], ENT_QUOTES));
 
-    $query = "INSERT INTO todo (todoDescription, employee_id) VALUES ('$taskDescription','$currentEmployee')";
+    $checkToDoExistance = "SELECT * FROM todo where todoDescription='$taskDescription' AND employee_id = '$currentEmployee'";
 
-    $result = mysqli_query($conn, $query);
+    $existanceResult = mysqli_query($conn, $checkToDoExistance);
 
-    if($result){
-        redirect("../todo.php","To do was added successfully");
-    }
-    else{
-        redirect("../todo.php", "Failed to add to do");
-    }
+    if($existanceResult){
+        if(mysqli_num_rows($existanceResult) == 0){
+
+        $query = "INSERT INTO todo (todoDescription, employee_id) VALUES ('$taskDescription','$currentEmployee')";
+
+        $result = mysqli_query($conn, $query);
+
+        if($result){
+            redirect("../todo.php","To do was added successfully");
+        }
+        else{
+            redirect("../todo.php", "Failed to add to do");
+        }
+        }else{
+            redirect("../todo","To do already exists");
+        }
+
+        }else{
+            redirect("../todo.php", "Failed to check existing To Do");
+        }
 }
 
 if(isset($_GET['editToDoBtn'])){

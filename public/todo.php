@@ -263,7 +263,7 @@ include("config/function.php");
             <!-- Widgets Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
- 
+                      <?php alertMessage(); ?>
                     <div class="col-sm-12 col-md-6 col-xl-6">
                         <div class="h-100 bg-light rounded p-4" id="showfewtodotab">
                             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -287,7 +287,7 @@ include("config/function.php");
                                 <input class="form-check-input m-0" type="checkbox">
                                 <a href="#" onclick="editToDo('<?= $todo['id'];?>','<?= $todo['todoDescription'];?>'); return false;" class="w-100 ms-3" >
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><?= substr($todo['todoDescription'],0,60); ?>...... </span>
+                                        <span><?= strlen($todo['todoDescription']) > 50 ? substr($todo['todoDescription'],0,60).'......' : $todo['todoDescription'] ?> </span>
                                     </div>
                                 </a>
                                 </div> 
@@ -297,7 +297,7 @@ include("config/function.php");
                                 <input class="form-check-input m-0" type="checkbox">
                                 <div class="w-100 ms-3">
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span>No Todo..</span>
+                                        <span>No Todo</span>
                                         <button class="btn btn-sm"><i class="fa fa-times"></i></button>
                                     </div>
                                 </div>
@@ -341,7 +341,7 @@ include("config/function.php");
                             <!-- <input type="hidden" id="editTodoId" > -->
                             <div class="d-flex mb-2">
                                 <input class="form-control bg-transparent" type="text" placeholder="Search To Do">
-                                <button type="button" class="btn btn-primary ms-2">Home</button>
+                                <button type="button" class="btn btn-primary ms-2" onclick="showtodocontent('showfewtodotab');">Home</button>
                             </div>
                            <div class="d-flex align-items-center border-bottom py-2">
                                 <div class="w-100 ms-3">
@@ -381,7 +381,7 @@ include("config/function.php");
                                 <input class="form-check-input m-0" type="checkbox">
                                 <a href="#" onclick="editToDo('<?= $todo['id'];?>','<?= $todo['todoDescription'];?>'); return false;" class="w-100 ms-3" >
                                     <div class="d-flex w-100 align-items-center justify-content-between">
-                                        <span><?= substr($todo['todoDescription'],0,60); ?>...... </span>
+                                      <span><?= strlen($todo['todoDescription']) > 50 ? substr($todo['todoDescription'],0,50).'......' : $todo['todoDescription'] ?> </span>
                                     </div>
                                 </a>
                                 </div> 
