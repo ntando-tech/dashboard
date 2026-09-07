@@ -104,6 +104,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'admin')
                     <a href="applications.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Applications</a>
                     <a href="employees.php" class="nav-item nav-link"><i class="fas fa-user-friends"></i>Employees</a>
                     <a href="tasks.php" class="nav-item nav-link"><i class="fa fa-tasks me-2"></i>Tasks</a>
+                    <a href="tickets.php" class="nav-item nav-link"><i class="fa fa-tasks me-2"></i>Tickets</a>
                     <a href="todo.php" class="nav-item nav-link"> <i class="fas fa-sign-out-alt"></i>To Do</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Accounts</a>
@@ -223,10 +224,10 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'admin')
                                     if($userItem['reciptient_email'] == $userEmail) {?>
                            <hr class="mt-0 mb-0"></hr>
                            <a <?php if($userItem['created_from']== "tasksss"){?>
-                             href="task_edit.php?id=<?= $userItem['id'];?>"<?php } elseif($$userItem['created_from']=='applications'){?>
-                            href="application_edit.php?id=<?= $userItem['id'];?>"<?php } elseif($userItem['created_from']=='tickets'){?>
-                            href="ticket_edit.php?id=<?= $userItem['id'];?>" <?php }elseif($userItem['created_from']=='social_medias'){?>
-                            href="social_media_edit.php?id=<?= $userItem['id']; ?>" <?php } ?> 
+                             href="task_edit.php?id=<?= $userItem['task_id'];?>"<?php } elseif($$userItem['created_from']=='applications'){?>
+                            href="application_edit.php?id=<?= $userItem['task_id'];?>"<?php } elseif($userItem['created_from']=='tickets'){?>
+                            href="ticket_edit.php?id=<?= $userItem['task_id'];?>" <?php }elseif($userItem['created_from']=='social_medias'){?>
+                            href="social_media_edit.php?id=<?= $userItem['task_i']; ?>" <?php } ?> 
                             href="404.html" class="dropdown-item">
                                 <h6 class="fw-normal mb-0"><b><?= $userItem['notification_name']; ?> </b></h6>
                                 <small> <?= timeAgo($notificationTime); ?></small>

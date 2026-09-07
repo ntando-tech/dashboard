@@ -487,6 +487,35 @@ function getToDo($id){
  }
 
 
+ function markNotificationAsRead($tableName, $taskId, $currentUserId){
+    global $conn;
+
+    $tableName = validate($tableName);
+    $taskId = validate($taskId);
+    $currentUserId = validate($currentUserId);
+
+    $query = "SELECT * FROM notifications WHERE task_id='$taskId' AND reciptient_email='$currentUserId' LIMIT 1 ";
+
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_assoc($result);
+            //foreach($row['reciptient_email'] as $response){
+            if($row['is_read'] == 0){
+                $query2 = "UPDATE notifications SET is_read = 1 WHERE task_id='$taskId' AND reciptient_email='$currentUserId' ";
+                $result2 = mysqli_query($conn, $query2);
+            }
+            //}
+
+        }else{
+            redirect("../404.html", "Task was not found!!");
+        }
+    }else{
+        redirect("../tasks.php", "Failed to retrieve task");
+    }
+ }
+
 /*function getConversation()
 {
     $user_id = $_GET['user_id'];
