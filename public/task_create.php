@@ -262,9 +262,10 @@
                     <?= alertMessage(); ?> 
                         <form action="admin/code.php" method="post">
                             <div class="row">
+                                
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="taskName"><b>Task Name</b></label>
+                                        <h6 for="taskName">Task Name <sup class="text-danger">*</sup></h6>
                                         <input type="text" id="taskName" name="task_name"  required class="form-control">
                                     </div>
                                 </div>
@@ -272,21 +273,20 @@
 
                                    <input hidden type="text" id="currentuserfirstname" name="currentuserfirstname" value='<?=$_SESSION["loggedInUser"]["firstname"]." ".$_SESSION["loggedInUser"]["email"]?>'  class="form-control">
 
-     
-
-                                            <input hidden type="text" id="currentuserid" name="currentuserid" value="<?=$_SESSION['loggedInUser']['id'];?>" required class="form-control">
-                                            <input hidden type="text" id="currentuserfullname"  name="current_user_fullname" value="<?=$_SESSION['loggedInUser']['firstname'].' '.$_SESSION['loggedInUser']['lastname'];?>" required class="form-control">
-                 
+                                   <input hidden type="text" id="currentuserid" name="currentuserid" value="<?=$_SESSION['loggedInUser']['id'];?>" required class="form-control">
+                                   <input hidden type="text" id="currentUserEmail" name="currentUserEmail" value="<?=$_SESSION['loggedInUser']['id'];?>" required class="form-control">
+                                    <input hidden type="text" id="currentuserfullname"  name="current_user_fullname" value="<?=$_SESSION['loggedInUser']['firstname'].' '.$_SESSION['loggedInUser']['lastname'];?>" required class="form-control">
+                 `
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="team_members">Task Members</label>
+                                        <h6 for="team_members">Task Members <sup class="text-danger">*</sup> </h6>
                                         <select type="text" id="team_members" name="team_members[]" multiple required class="form-control">
                                          <?php 
                                          $employees = getAll('employees');
                                          if(mysqli_num_rows($employees) > 0){
                                             foreach($employees as $employeeItem){?>   
-                                        <option value="<?=$employeeItem['firstname']; ?>"> <?=$employeeItem['firstname']; ?>  </option>
+                                        <option value="<?=$employeeItem['id'];?>" <?= $employeeItem['id'] == $_SESSION['loggedInUser']['id'] ? 'hidden' : '' ?> > <?=$employeeItem['firstname'].' '.$employeeItem['lastname']; ?>  </option>
                                         <?php } }?>
                                         </select>
                                     </div>
@@ -297,23 +297,22 @@
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="task_description">Task Description</label>
-                                        <textarea id="task_description" name="task_description" required rows="5" class="form-control"></textarea>
+                                        <h6 for="task_description">Task Description</h6>
+                                        <textarea id="task_description" name="task_description"  rows="4" class="form-control"></textarea>
                                     </div>
                                 </div>
 
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="dateInput">Due Date</label>
-
-                                        <input type="date" id="dateInput" name="due_Date" required  class="form-control">
+                                        <h6 for="dateInput">Due Date</h6>
+                                        <input type="date" id="dateInput" name="due_Date"  class="form-control">
                                     </div>
                                 </div>    
                            
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <label for="progress_status">Progress Status</label>
+                                    <h6 for="progress_status">Progress Status</h6>
                                     <select id="progress_status" name="progress_status" required  readonly class="form-select">
                                     <option value="Incomplete" selected>Incomplete</option>
                                       </select>
@@ -322,17 +321,28 @@
 
                             <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="note">Note</label>
+                                        <h6 for="note">Note</h6>
                                         <input id="note" type="text" name="note"  class="form-control">
                                     </div>
                                 </div>
 
 
+                                <div class="d-flex justify-content-center">
+                            
+                                <div class="col-md-3">
+                                <div class="mb-3">
+                                    <br>
+                                    <button type="reset"  class="btn btn-warning">Cancel</button>
+                                </div>
+                            </div>
+
                             <div class="col-md-3">
-                                <div class="mb-3 text-end">
+                                <div class="mb-3">
                                     <br>
                                     <button type="submit" id="saveBtn" name="saveTask"  class="btn btn-primary">Save</button>
                                 </div>
+                            </div>
+
                             </div>
 
                         </div>
@@ -379,21 +389,9 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the current date
-            const today = new Date();
-            // Format the date to YYYY-MM-DD
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-            const dd = String(today.getDate()).padStart(2, '0');
-
-            const minDate = `${yyyy}-${mm}-${dd}`;
-            
-            // Set the min attribute to today's date
-            document.getElementById('dateInput').setAttribute('min', minDate);
-        });
-    </script>
+    <!-- theme switch js (light and dark)-->
+        <script src="js/changetheme.js"></script>
+    <!-- //theme switch js (light and dark)-->
 
     
 

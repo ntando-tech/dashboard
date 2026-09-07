@@ -390,9 +390,15 @@ if(isset($_POST['saveTask']))
     $task_description = validate($_POST['task_description']);
     $due_date = validate($_POST['due_Date']);
     $created_by = validate($_POST['current_user_fullname']);
-   $employeeId = validate($_POST['currentuserid']) ;
+   $employeeId = validate($_POST['currentuserid']);
    $progress_status = validate($_POST['progress_status']);
     $note= validate($_POST['note']);
+
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+
+    $fromm_email = validate($_POST['currentUserEmail']);
+
 
     $options = $team_members;
 
@@ -405,14 +411,45 @@ if(isset($_POST['saveTask']))
 
     if($task_name != ''  || $team_members != '' || $task_description != '' || $due_date != '' || $progress_status != '')
     {
+        $notification_name = "You\'ve been added on new Task";
+        $notification_description = "$created_by added you on a task called $task_name";
+
         $query = "INSERT INTO tasksss (task_name,users_assigned, task_description,due_date,progress_status,note, created_by,employee_id)
          VALUES ('$task_name','$optionsString','$task_description','$due_date','$progress_status','$note','$created_by','$employeeId')";
 
+
         $result = mysqli_query($conn,$query);
+
 
         if($result)
         {
-            redirect('../tasks.php','Task Added Successfully');
+            // redirect('../tasks.php','Task Added Successfully');
+             $query2 = "SELECT id  from tasksss WHERE task_name='$task_name' AND employee_id='$employeeId' ORDER By id DESC LIMIT 1 ";
+              $result2 = mysqli_query($conn, $query2);
+           
+              if($result2){
+                if(mysqli_num_rows($result2) == 1){
+               $response = mysqli_fetch_assoc($result2);
+                $task_id = $response['id'];
+      
+
+        foreach($team_members as $selectedMember){
+        $query3 = "INSERT INTO notifications (notification_name, notification_description, created_date, created_time, reciptient_email, employee_id, task_id) 
+        VALUES ('$notification_name','$notification_description','$date','$time','$selectedMember','$fromm_email', $task_id)";
+        }
+
+                 $result3 = mysqli_query($conn, $query3);
+
+                if($result3){
+                    redirect('../tasks.php', 'Notification was sent');
+                }
+                }else{
+                    redirect('../tasks.php', 'Task name not found!');
+                }
+
+            }else{
+                redirect('../tasks.php', 'Failed to retrieve task Id');
+            }
         }
         else
         {
