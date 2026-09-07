@@ -7,11 +7,11 @@ $paraResult = checkParamId('id');
 if(is_numeric($paraResult))
 {
         $taskId = validate($paraResult);
-        $task = getById('tasks',$taskId);
+        $task = getById('tasksss',$taskId);
 
         if($task['status'] == 200)
         {
-            $taskDeleteRes = deleteQuery('tasks',$taskId);
+            $taskDeleteRes = deleteQuery('tasksss',$taskId);
             if($taskDeleteRes)
             {
                 redirect('tasks.php', 'Task Deleted Successfully');
