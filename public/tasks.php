@@ -373,6 +373,10 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+        <!-- theme switch js (light and dark)-->
+        <script src="js/changetheme.js"></script>
+    <!-- //theme switch js (light and dark)-->
 </body>
 
 </html>
