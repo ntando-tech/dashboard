@@ -273,7 +273,6 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Task_Name</th>
-                                    <th>Team_Member</th>
                                     <th>Task Description</th>
                                     <th>Status</th>
                                     <th>Due_Date</th>
@@ -291,9 +290,8 @@
                                 ?>
                                 <tr>
                                 <td><?=$taskItem['id'];?></td>
-                                <td><?=$taskItem['task_name'];?></td>
-                                <td><?=$taskItem['users_assigned'];?></td>
-                                <td><?=$taskItem['task_description'];?></td>
+                                <td><?= strlen($taskItem['task_name']) > 15 ? substr($taskItem['task_name'], 0, 15).'....' : $taskItem['task_name']?></td>
+                                <td><?= strlen($taskItem['task_description']) > 30 ? substr($taskItem['task_description'],0,30).'...... ': $taskItem['task_description'] ?></td>
                                 <td><?=$taskItem['progress_status'] == 1 ? 'Complete' : 'Incomplete'; ?></td>
                                 <td><?=$taskItem['due_date'];?></td>
 
