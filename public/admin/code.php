@@ -414,8 +414,8 @@ if(isset($_POST['saveTask']))
         $notification_name = "You\'ve been added on new Task";
         $notification_description = "$created_by added you on a task called $task_name";
 
-        $query = "INSERT INTO tasksss (task_name,users_assigned, task_description,due_date,progress_status,note, created_by,employee_id)
-         VALUES ('$task_name','$optionsString','$task_description','$due_date','$progress_status','$note','$created_by','$employeeId')";
+        $query = "INSERT INTO tasksss (task_name,users_assigned, task_description,created_from,due_date,progress_status,note, created_by,employee_id)
+         VALUES ('$task_name','$optionsString','$task_description''tasksss','$due_date','$progress_status','$note','$created_by','$employeeId')";
 
 
         $result = mysqli_query($conn,$query);

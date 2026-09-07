@@ -187,11 +187,11 @@ function getAllNotifications($tableName, $currentUserEmail) {
     return $result;
 }
 
-function countUnreadNotifications($currentUserEmail) {
+function countUnreadNotifications($currentUserId) {
     global $conn;
 
-    $currentuserelemail = validate($currentUserEmail);
-    $query = "SELECT COUNT(*) as unread_count FROM notifications WHERE reciptient_email='$currentuserelemail' AND is_read=0";
+    $currentUserId = validate($currentUserId);
+    $query = "SELECT COUNT(*) as unread_count FROM notifications WHERE reciptient_email='$currentUserId' AND is_read=0";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 

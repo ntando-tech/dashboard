@@ -197,7 +197,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'admin')
                         
                         <?php if(isset($_SESSION['loggedInUser'])) {
 
-                            $userEmail = $_SESSION['loggedInUser']['email'];
+                            $userEmail = $_SESSION['loggedInUser']['id'];
                             $unreadCount = countUnreadNotifications($userEmail); 
                             $users = getAllNotifications("notifications", $userEmail);
 
@@ -205,7 +205,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'admin')
                         <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
-                            <sub class="badge bg-danger" style="margin-left:-13px;"><?php echo $unreadCount; ?> </sub>
+                            <sup class="badge bg-danger" style="margin-left:-13px;"><?php echo $unreadCount; ?> </sup>
                             <span class="d-none d-lg-inline-flex" style="display:none">Notifications</span>
                         </a> <?php } else {?> 
                          <div class="nav-item dropdown">
@@ -222,7 +222,12 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'admin')
                                     $notificationTime = $userItem['created_date'] .' '. $userItem['created_time'];
                                     if($userItem['reciptient_email'] == $userEmail) {?>
                            <hr class="mt-0 mb-0"></hr>
-                           <a href="#" class="dropdown-item">
+                           <a <?php if($userItem['created_from']== "tasksss"){?>
+                             href="task_edit.php?id=<?= $userItem['id'];?>"<?php } elseif($$userItem['created_from']=='applications'){?>
+                            href="application_edit.php?id=<?= $userItem['id'];?>"<?php } elseif($userItem['created_from']=='tickets'){?>
+                            href="ticket_edit.php?id=<?= $userItem['id'];?>" <?php }elseif($userItem['created_from']=='social_medias'){?>
+                            href="social_media_edit.php?id=<?= $userItem['id']; ?>" <?php } ?> 
+                            href="404.html" class="dropdown-item">
                                 <h6 class="fw-normal mb-0"><b><?= $userItem['notification_name']; ?> </b></h6>
                                 <small> <?= timeAgo($notificationTime); ?></small>
                             </a>
