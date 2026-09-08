@@ -49,22 +49,19 @@ include("config/function.php");
 
         <!-- Sign Up Start -->
         <div class="container-fluid">
-                    <div class="content">
-           <!-- Navbar Start -->
- <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-    <a href="user_dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
-        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i>Dashmin</h2>
-    </a>
-    <!-- <a href="#" class="sidebar-toggler flex-shrink-0">
-        <i class="fa fa-bars"></i>
-    </a> -->
-    <!-- <form class="d-none d-md-flex ms-4">
-        <input class="form-control border-0" type="search"  placeholder="Search">
-    </form> -->
-    <div class="navbar-nav align-items-center ms-auto ">
+                       <!-- Content Start -->
+        <div class="content"> <!-- should include ms-0-->
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                </a>
+
+                <h4>Welcome <?=$_SESSION['loggedInUser']['firstname'].' '.$_SESSION['loggedInUser']['lastname']?></h4>
+                <div class="navbar-nav align-items-center ms-auto">
 
         <!-- toggle switch for light and dark theme -->
-    <!-- <div class="cont-ser-position">
+    <div class="cont-ser-position">
           <nav class="navigation">
               <div class="theme-switch-wrapper">
                   <label class="theme-switch" for="checkbox">
@@ -76,8 +73,11 @@ include("config/function.php");
                   </label>
               </div>  
           </nav>
-      </div> -->
+      </div>
       <!-- //toggle switch for light and dark theme --> 
+
+                 
+
 
                         
                         <?php if(isset($_SESSION['loggedInUser'])) {
@@ -125,17 +125,16 @@ include("config/function.php");
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <?php if(isset($_SESSION['loggedInUser'])){?>
-                            <span class="d-none d-lg-inline-flex"><?= $_SESSION['loggedInUser']['firstname'];?></span>
-                            <?php } else {?>
-                            <span class="d-none d-lg-inline-flex">Noname</span>
-                            <?php }?>
+                        <?php if(isset($_SESSION['loggedInUser'])){?>    
+                        <img class="rounded-circle me-lg-2" src="myassets/uploads/services/<?= $_SESSION['loggedInUser']['profile_image']; ?>" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex"><?= $_SESSION['loggedInUser']['username'];?></span>
+                            <span class="d-none d-lg-inline-flex"><?= $_SESSION['loggedInUser']['role'];?></span>
+                           <?php } ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="profile.php" class="dropdown-item">My Profile</a>
-                            <a href="settings.php" class="dropdown-item">Settings</a>
-                            <a href="logout.php" class="dropdown-item">Log Out</a>
+                            <a href="profile" class="dropdown-item">My Profile</a>
+                            <a href="settings" class="dropdown-item">Settings</a>
+                            <a href="logout" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>

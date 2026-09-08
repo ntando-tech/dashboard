@@ -530,6 +530,76 @@ function getToDo($id){
     }
  }
 
+ function getAllById($tablename,$column,$id){
+    global $conn;
+
+    $tablename = validate($tablename);
+    $column = validate($column);
+    $id = validate($id);
+
+    $query = "SELECT * FROM $tablename where $column='$id' LIMIT 1";
+
+    $result = mysqli_query($conn, $query);
+    if($result){
+        if(mysqli_num_rows($result)== 1){
+            $rows = mysqli_fetch_assoc($result);
+                return [
+                    'status'=> 200,
+                    'message' => 'fetched data',
+                    'data' => $rows
+                ];
+        }else{
+                  return [
+                    'status'=> 404,
+                    'message' => 'Not found',
+                ];
+        }
+
+    }else{
+        redirect("../user_dashboard.php", "Failed to find ");
+    }
+ }
+
+ function findUserApplication($id){
+
+ global $conn;
+ $id = validate($id);
+
+ $query = "SELECT applications.application_form,
+    applications.id_copy,
+    applications.school_report,
+    applications.grade,
+    applications.status,
+    applications.created_date as submitted_date,
+    users.firstname,
+    users.lastname,
+    users.email
+    FROM applications
+    JOIN users ON applications.user_id = '$id'WHERE applications.user_id = '$id'  LIMIT 1";
+
+    $result = mysqli_query($conn, $query);
+
+    if($result){
+            if(mysqli_num_rows($result) == 1){
+                $rows = mysqli_fetch_assoc($result);
+                return [
+                    'status' => 200,
+                    'message' => 'Fetched Data',
+                    'data' => $rows
+                ];
+            }else{
+               return [
+                'status' => 404,
+                'message' => "Not Found"
+               ];
+            }
+    }else{
+        redirect("../user_dashboard.php", "Failed to retrieve application data");
+    }
+
+ }
+
+
 /*function getConversation()
 {
     $user_id = $_GET['user_id'];

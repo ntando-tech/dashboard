@@ -1,11 +1,6 @@
-<?php 
-// include("messagealert.php");
-include("config/function.php");
-if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
-{
-    redirect('signin.php','Unauthorized');
-}
+<?php
 
+include("config/function.php");
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +8,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard</title>
+    <title>Signup</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -52,10 +47,9 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
         <!-- Spinner End -->
 
 
-
-
-
-        <!-- Content Start -->
+        <!-- Sign Up Start -->
+        <div class="container-fluid">
+                       <!-- Content Start -->
         <div class="content"> <!-- should include ms-0-->
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -63,10 +57,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
 
-                <div class="d-flex justify-content-between">
-                    <a href="user_dashboard.php"><h3 class="text-primary">User Dashboard</h3> </a>
-             
-                </div>
+                <h4>Welcome <?=$_SESSION['loggedInUser']['firstname'].' '.$_SESSION['loggedInUser']['lastname']?></h4>
                 <div class="navbar-nav align-items-center ms-auto">
 
         <!-- toggle switch for light and dark theme -->
@@ -150,98 +141,68 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
             </nav>
             <!-- Navbar End -->
 
+            <div class="row h-100  align-items-center justify-content-center" style="min-height: 100vh;">
+                <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                    <div> <?php alertMessage(); ?> </div><br>
+                    <!-- <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3"> -->
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h4>Application Form</h4>
+                        </div> 
+                        
+                        <?php 
+                        
+                        $userApplication = findUserApplication($_SESSION['loggedInUser']['id']);
+                        if($userApplication['status'] == 200) {?>
 
+                   <form action="admin/code.php" enctype="multipart/form-data" method="POST" >
 
-            <!-- Sale & Revenue Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-
-                      <?php 
-                    $userId = checkParamId($_SESSION['loggedInUser']['id']);
-
-                    $userApplication = getAllById('applications','user_id', $_SESSION['loggedInUser']['id']);
-                    if($userApplication['status'] == 200){ ?>
-                    <a href="view_application.php" class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Applications</p>
-                                <h6 class="mb-0">No Of Applications:1</h6>
-                            </div>
+                        <div class="form-group mb-3">
+                        <input type="text"  name="userId" hidden readonly id="inputId" required>
                         </div>
-                    </a>
-                                <?php } else { ?>
-                         <a href="application_form.php" class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Applications</p>
-                                <h6 class="mb-0">No Of Applications:0</h6>
-                            </div>
+                        <div class="form-group mb-3">
+                             <label for="inputFullName"><b>Full Name</b> <span class="text-danger">*</span>  </label>
+                            <input type="text" class="form-control" name="inputFullName" readonly  value="<?= $userApplication['data']['firstname'].' '.$userApplication['data']['lastname']?>" id="inputFullName"   required>
                         </div>
-                    </a>
-                       <?php } ?>
-
-                    <a href="/application_form.php" class="col-sm-6 col-xl-3">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Reports</p>
-                                <h6 class="mb-0">No Of Reports: 0</h6>
-                            </div>
+                        <div class="form-group mb-3">
+                             <label for="inputEmail"><b>Email <span class="text-danger">*</span> </label>
+                             <input type="email"  class="form-control" name="inputEmail" readonly value="<?= $userApplication['data']['email']?>"  id="inputEmail" required>
                         </div>
-                    </a>
 
-                </div>
-            </div>
-            <!-- Sale & Revenue End -->
+                        <div class="form-group mb-3">
+                         <label>Select Grade <span class="text-danger">*</span> </label>
+                                <select name="inputGrade" required class="form-select">
+                                <option value="<?= $userApplication['data']['grade']; ?>" selected>
+                                    <?= $userApplication['data']['grade']; ?>
+                                </option>
+                            </select>
+                                <br>
+                        <div class="form-group mb-3">
+                        <label for="fileApplicationForm"><b>Application Form</b> <span class="text-danger">*</span>  </label><br>
+                        <a id="fileApplicationForm" href="<?= $userApplication['data']['application_form']?>" name="fileApplicationForm" class="form-control bg-light" required  accept=".pdf,application/pdf">Application File </a>
+                         </div>
+                        <div class="form-group mb-4">
+                        <label for="fileIdCopy"><b>Id Copy</b> <span class="text-danger">*</span>  </label>   
+                         <a  id="fileIdCopy" name="fileIdCopy" href="<?= $userApplication['data']['id_copy']?>" class="form-control bg-light"  required accept=".pdf,application/pdf"> Id Copy </a>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="fileSchoolReport"><b>School Report</b> <span class="text-danger">*</span> </label>
+                            <a  id="fileSchoolReport" name="fileSchoolReport" value="<?= $userApplication['data']['school_report']?>" disabled class="form-control bg-light" required  accept=".pdf,application/pdf"> School Report </a>
+                        </div>
 
-            <!-- Widgets Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4 ">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex  justify-content-between mb-2">
-                                <?php 
-                                $userId = checkParamId($_SESSION['loggedInUser']['id']);
+                        <button type="submit" name="submitApplication" class="btn btn-primary py-3 w-100 mb-4" disabled>Submit</button>
 
-                                $userApplication = getAllById('applications','user_id', $_SESSION['loggedInUser']['id']);
-                                if($userApplication['status'] == 200){ ?>
-                                
-                                <h4 href="">Application Status: <?=$userApplication['data']['user_id'];?></h4>
-                                <?php } else { ?>
-                             <a href="application_form.php">Apply Now </a>
-                            <?php } ?>
-                            </div>
-
-                           
                     </div>
-                </div>
-            </div>
-            <!-- Widgets End -->
-
-
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">iNtando Visionary</a>, All Right Reserved. 
+                    <?php }else{?>
+                        <div class="form-group mb-4 justify-content-center">
+                            <h3 for="fileSchoolReportInput"><b>Application Not Found!!! <?=$_SESSION['loggedInUser']['id']?></b> <span class="text-danger">*</span> </h3>
                         </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
-                    </div>
-                </div>
+                       <?php }?>
+ 
+                </form>
+                <!-- </div> -->
             </div>
-            <!-- Footer End -->
         </div>
-        <!-- Content End -->
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Sign Up End -->
     </div>
 
     <!-- JavaScript Libraries -->
@@ -257,10 +218,6 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <!-- theme switch js (light and dark)-->
-        <script src="js/changetheme.js"></script>
-    <!-- //theme switch js (light and dark)-->
 </body>
 
 </html>

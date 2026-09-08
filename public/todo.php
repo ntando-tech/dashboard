@@ -320,7 +320,7 @@ include("config/function.php");
                                     <form action="config/function.php">
               
                                      <input type="text" hidden name="employee_id" value="<?= $_SESSION['loggedInUser']['id'];?>">
-                                 <textarea name="todoDescription" rows="7" cols="45" required> </textarea>    
+                                 <textarea name="todoDescription" rows="7" placeholder="Write To Do Description" cols="45" required> </textarea>    
                                 </div><br>
                                     <div class="d-flex w-100 align-items-center justify-content-between">
                                 <button type="reset" class="btn btn-warning">Clear</button>
