@@ -208,7 +208,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                                 $userApplication = getAllById('applications','user_id', $_SESSION['loggedInUser']['id']);
                                 if($userApplication['status'] == 200){ ?>
                                 
-                                <h4 href="">Application Status: <?=$userApplication['data']['user_id'];?></h4>
+                                <h4 href="">Application Status: <?=$userApplication['data']['status'];?></h4>
                                 <?php } else { ?>
                              <a href="application_form.php">Apply Now </a>
                             <?php } ?>
