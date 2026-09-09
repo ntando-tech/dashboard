@@ -142,7 +142,8 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="user_profile.php" class="dropdown-item">My Profile</a>
-                            <a href="user_settings.php" class="dropdown-item">Settings</a>
+                            <a href="user_change_password.php" class="dropdown-item">Change Password</a>
+                            <a href="user_delete_account.php" class="dropdown-item">Delete Account</a> 
                             <a href="logout.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ include("config/function.php");
 
 <head>
     <meta charset="utf-8">
-    <title>Profile</title>
+    <title>Change Password</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -133,8 +133,7 @@ include("config/function.php");
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
-                            <a href="user_change_password.php" class="dropdown-item">Change Password</a>
-                            <a href="user_delete_account.php" class="dropdown-item">Delete Account</a> 
+                            <a href="user_settings.php" class="dropdown-item">Settings</a>
                             <a href="logout.php" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
@@ -147,7 +146,7 @@ include("config/function.php");
                     <div> <?php alertMessage(); ?> </div><br>
                     <!-- <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3"> -->
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h4>Application Form</h4>
+                            <h4>Change Password</h4>
                         </div> 
                 <form action="admin/code.php"  enctype="multipart/form-data" method="POST" >
                         <?php if(isset($_SESSION["loggedInUser"])){
@@ -155,54 +154,28 @@ include("config/function.php");
                          if($userItem['firstname'] != '' && $userItem['role'] == 'user'){
                         ?>
 
-                                <div class="col-md-4">
-                    <div class="text-center">
-                        <?php if($userItem['profile_image'] != 'default_pic.jpg')
-                        {?>
-                        <img id="profileImage"  alt="Picture of <?=$userItem['profile_image'];?>" src="<?=$userItem['profile_image'];?>" class="rounded-circle img-responsive mt-2" width="128" height="128">
-                        <?php 
-                        }
-                        else 
-                        {
-                            ?>
-                                <img id="profileImage"  alt="Picture of <?=$userItem['profile_image'];?>" src="myassets/uploads/services/default_pic.jpg" class="rounded-circle img-responsive mt-2" width="128" height="128">
-                            <?php
-                        }
-                        ?>
-                        <div class="mt-2">
-                            <span class="btn btn-primary" id="uploadBtn"><i class="fa fa-upload"></i></span>
-                        </div>
-                        <div class="mt-2">
-                            <input type="file" id="fileInput" name="profileImage" class="btn btn-primary" style="display: none;" accept="image/*">
-                        </div>
-         
-                    </div>
-                    </div>
                         <div class="form-group mb-3">
                         <input type="text"  name="userId" hidden readonly id="inputId" value="<?=$userItem['id'];?>" required>
                         </div>
                         <div class="form-group mb-3">
-                             <label for="inputFullName"><b>Username</b> <span class="text-danger">*</span>  </label>
-                            <input type="text" class="form-control" name="inputFullName" readonly  id="inputFullName"  value="<?=$userItem['username'];?>" required>
+                             <label for="inputCurrentPassword"><b>Current Password</b> <span class="text-danger">*</span>  </label>
+                            <input type="password" class="form-control" name="inputCurrentPassword"   id="inputCurrentPassword" >
                         </div>
                         <div class="form-group mb-3">
-                             <label for="inputFullName"><b>Full Name</b> <span class="text-danger">*</span>  </label>
-                            <input type="text" class="form-control" name="inputFullName" readonly  id="inputFullName"  value="<?=$userItem['firstname'].' '.$userItem['lastname'];?>" required>
+                             <label for="inputNewPassword"><b>New Password</b> <span class="text-danger">*</span>  </label>
+                            <input type="password" class="form-control"  name="inputNewPassword" id="inputNewPassword" required>
                         </div>
+
                         <div class="form-group mb-3">
-                             <label for="inputEmail"><b>Email <span class="text-danger">*</span> </label>
-                             <input type="email"  class="form-control" name="inputEmail" readonly  id="inputEmail" value="<?=$userItem['email'];?>" required>
-                        </div>
-                        <div class="form-group mb-3">
-                             <label for="inputPhone"><b>Phone Number</b> <span class="text-danger">*</span>  </label>
-                            <input type="text" class="form-control" name="inputPhone" readonly  id="inputFullName"  value="<?=$userItem['phone'];?>" required>
+                             <label for="inputConfirmPassword"><b>Confirm Password</b> <span class="text-danger">*</span>  </label>
+                            <input type="password" class="form-control"  name="inputConfirmPassword" id="inputConfirmPassword" required>
                         </div>
 
                         <div class="d-flex justify-content-between">
                             <div class="form-group mb-3">
-                        <button type="reset"  class="btn btn-warning py-3 w-100 mb-4">Reset</button>
+                        <button type="reset"  class="btn btn-warning w-100 mb-4">Cancel</button>
                             </div>
-                       <div class="form-group mb-3"> <button type="submit" name="submitApplication" class="btn btn-primary py-3 w-100 mb-4">Submit</button> </div>
+                       <div class="form-group mb-3"> <button type="submit" name="submitApplication" class="btn btn-primary  w-100 mb-4">Submit</button> </div>
                         </div>
 
                     </div>
