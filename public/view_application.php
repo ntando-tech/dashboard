@@ -186,7 +186,7 @@ include("config/function.php");
                         </div>
                         <div class="form-group mb-4">
                             <label for="fileSchoolReport"><b>School Report</b> <span class="text-danger">*</span> </label>
-                            <a  id="fileSchoolReport" name="fileSchoolReport" value="<?= $userApplication['data']['school_report']?>" disabled class="form-control bg-light" required  accept=".pdf,application/pdf"> School Report </a>
+                            <a  id="fileSchoolReport" name="fileSchoolReport" href="<?= $userApplication['data']['school_report']?>" class="form-control bg-light"  required accept=".pdf,application/pdf"> School Report </a>
                         </div>
 
                         <button type="submit" name="submitApplication" class="btn btn-primary py-3 w-100 mb-4" disabled>Submit</button>
