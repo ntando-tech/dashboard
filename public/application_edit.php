@@ -287,7 +287,7 @@
                       
                             ?>
 
-                        <input type="hidden" name="applicationId" value="<?= $user['data']['grade']; ?>" required>
+                        <input type="hidden" name="applicationId" value="<?= $user['data']['applications_id']; ?>" required>
 
                             <div class="row">
                                 <div class="col-md-4">
@@ -315,14 +315,14 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <h6>Grade</h6>
-                                        <input type="text" name="username" readonly  value="<?= $user['data']['grade'];?>" required class="form-control">
+                                        <input type="text" name="grade" readonly  value="<?= $user['data']['grade'];?>" required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <h6>Created At</h6>
-                                        <input type="text" name="username" readonly value="<?= $user['data']['created_date'];?>" required class="form-control">
+                                        <input type="text"  readonly value="<?= $user['data']['created_date'];?>" required class="form-control">
                                     </div>
                                 </div>
  
@@ -378,13 +378,13 @@
                                  <div class="col-md-4">
                                 <div class="mb-3">
                                     <br>
-                                    <button type="submit" name="deleteUser" class="btn btn-danger">Delete</button>
+                                    <button type="submit" name="deleteApplication" class="btn btn-danger">Delete</button>
                                 </div>
                                     </div>
                             <div class="col-md-4">
                                 <div class="mb-3">
                                     <br>
-                                    <button type="submit" name="updateUser" class="btn btn-primary">Update</button>
+                                    <button type="submit" name="updateApplication" class="btn btn-primary">Update</button>
                                 <!-- </div> -->
                                 </div>
                                     </div>

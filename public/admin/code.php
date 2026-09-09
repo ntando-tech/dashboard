@@ -88,57 +88,25 @@ if(isset($_POST['saveNewEmployee']))
 }
 
 
-if(isset($_POST['updateUser']))
+if(isset($_POST['updateApplication']))
 {
-
-    $firstname = validate($_POST['firstname']);
-    $lastname = validate($_POST['lastname']);
-    $phone = validate($_POST['phone']);
-    $email = validate($_POST['email']);
-    $role = validate($_POST['role']);
-    $profile_image = validate($_POST['profile_image']);
-    $is_ban = validate($_POST['is_ban']) == true ? 1:0;
-
-    $userId = validate($_POST['userId']);
-
-    $user = getById('users',$userId);
-
-    if($user['status'] != 200)
-    {
-        redirect('../users_edit.php?id='.$userId,'No Such Id Found');
-    }
-
-    if($firstname != '' || $lastname != '' || $phone != '' || $email != ''|| $profile_image != '')
-    {
-
-        $query = "UPDATE users SET 
-        firstname='$firstname',
-        lastname='$lastname',
-        phone='$phone',
-        email='$email',
-        profile_image='$profile_image',
-        role='$role',
-        is_ban='$is_ban'
-         WHERE id='$userId'";
+    $status = validate($_POST['status']);
+   
+    $applicationId = validate($_POST['applicationId']);
+ 
+        $query = "UPDATE applications SET status='$status' WHERE id='$applicationId'";
 
         $result = mysqli_query($conn,$query);
 
         if($result)
         {
-            redirect('../users.php','User Updated Successfully');
+            redirect('../applications.php','Application status was Updated Successfully');
             
         }
         else
         {
-            redirect('../blank.html','Something went wrong');
+            redirect('../applications.php','Something went wrong');
         }
-
-
-    }
-    else
-    {
-            redirect('../users_create.html','Please fill all the input fields!');
-    }
 
 }
 
