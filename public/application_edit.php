@@ -288,6 +288,8 @@
                             ?>
 
                         <input type="hidden" name="applicationId" value="<?= $user['data']['applications_id']; ?>" required>
+                        <input type="hidden" name="userId" value="<?= $user['data']['user_id']; ?>" required>
+                        <input type="hidden" name="employeeId" value="<?= $_SESSION['loggedInUser']['id']?>" required>
 
                             <div class="row">
                                 <div class="col-md-4">

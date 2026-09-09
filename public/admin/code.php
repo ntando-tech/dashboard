@@ -90,17 +90,34 @@ if(isset($_POST['saveNewEmployee']))
 
 if(isset($_POST['updateApplication']))
 {
+
+global $conn;
     $status = validate($_POST['status']);
    
     $applicationId = validate($_POST['applicationId']);
- 
         $query = "UPDATE applications SET status='$status' WHERE id='$applicationId'";
 
         $result = mysqli_query($conn,$query);
 
         if($result)
         {
+            $userId = validate($_POST['userId']);
+            $notification_name = "Application status";
+            $employeeId = $_POST['employeeId'];
+            $notification_description = "Your application status has been updated to ". $status.".";
+            $date = date("Y-m-d");
+            $time = date("H:i:s");
+            
+        $query2 = "INSERT INTO notifications (notification_name, notification_description, created_from, created_date, created_time, employee_id, user_id,task_id)  
+        VALUES ('$notification_name','$notification_description','applications','$date','$time','$employeeId', '$userId','$applicationId')";
+
+        $result2 = mysqli_query($conn, $query2);
+        if($result2){
             redirect('../applications.php','Application status was Updated Successfully');
+        }   else
+        {
+            redirect('../applications.php','Something went wrong');
+        }
             
         }
         else

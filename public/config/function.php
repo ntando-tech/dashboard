@@ -573,7 +573,8 @@ function getToDo($id){
     applications.created_date as submitted_date,
     users.firstname,
     users.lastname,
-    users.email
+    users.email,
+    users.id as user_id
     FROM applications
     JOIN users ON applications.user_id = '$id'WHERE applications.user_id = '$id'  LIMIT 1";
 
