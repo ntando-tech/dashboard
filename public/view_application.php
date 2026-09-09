@@ -8,7 +8,7 @@ include("config/function.php");
 
 <head>
     <meta charset="utf-8">
-    <title>Signup</title>
+    <title>View Application</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -141,19 +141,18 @@ include("config/function.php");
             </nav>
             <!-- Navbar End -->
 
-            <div class="row h-100  align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="row h-100  align-items-center justify-content-center" style="min-height: 40vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div> <?php alertMessage(); ?> </div><br>
                     <!-- <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3"> -->
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h4>Application Form</h4>
-                        </div> 
-                        
                         <?php 
                         
                         $userApplication = findUserApplication($_SESSION['loggedInUser']['id']);
                         if($userApplication['status'] == 200) {?>
 
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <h4>Application Form</h4>
+                        </div> 
                    <form action="admin/code.php" enctype="multipart/form-data" method="POST" >
 
                         <div class="form-group mb-3">
@@ -193,8 +192,13 @@ include("config/function.php");
 
                     </div>
                     <?php }else{?>
-                        <div class="form-group mb-4 justify-content-center">
-                            <h3 for="fileSchoolReportInput"><b>Application Not Found!!! <?=$_SESSION['loggedInUser']['id']?></b> <span class="text-danger">*</span> </h3>
+            <div class="container-fluid  ">
+                        <div class="h-100 bg-light rounded p-4">
+                            <div class="d-flex  justify-content-between mb-2">   
+                                <h4 >You haven't Applied:</h4>  
+                             <a href="application_form.php">Apply Now </a>
+                        </div>
+                        </div>
                         </div>
                        <?php }?>
  

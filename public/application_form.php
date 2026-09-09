@@ -8,7 +8,7 @@ include("config/function.php");
 
 <head>
     <meta charset="utf-8">
-    <title>Signup</title>
+    <title>Application Form</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -53,7 +53,7 @@ include("config/function.php");
         <div class="content"> <!-- should include ms-0-->
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="user_dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
 

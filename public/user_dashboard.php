@@ -171,7 +171,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                         </div>
                     </a>
                                 <?php } else { ?>
-                         <a href="application_form.php" class="col-sm-6 col-xl-3">
+                         <a href="view_application.php" class="col-sm-6 col-xl-3">
                         <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
@@ -197,7 +197,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
             <!-- Sale & Revenue End -->
 
             <!-- Widgets Start -->
-            <div class="container-fluid pt-4 px-4">
+            <div class="container-fluid pt-4 px-4 mt-5">
                 <div class="row g-4">
                     <div class="col-sm-12 col-md-6 col-xl-4 ">
                         <div class="h-100 bg-light rounded p-4">
@@ -210,6 +210,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                                 
                                 <h4 href="">Application Status: <?=$userApplication['data']['status'];?></h4>
                                 <?php } else { ?>
+                                <h4>You haven't applied.</h4>
                              <a href="application_form.php">Apply Now </a>
                             <?php } ?>
                             </div>
