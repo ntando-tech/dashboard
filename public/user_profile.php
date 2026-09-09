@@ -8,7 +8,7 @@ include("config/function.php");
 
 <head>
     <meta charset="utf-8">
-    <title>View Application</title>
+    <title>Profile</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -53,7 +53,7 @@ include("config/function.php");
         <div class="content"> <!-- should include ms-0-->
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="user_dashboard.php" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                 </a>
 
@@ -132,7 +132,7 @@ include("config/function.php");
                            <?php } ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="user_profile.php" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">My Profile</a>
                             <a href="user_settings.php" class="dropdown-item">Settings</a>
                             <a href="logout.php" class="dropdown-item">Log Out</a>
                         </div>
@@ -141,67 +141,75 @@ include("config/function.php");
             </nav>
             <!-- Navbar End -->
 
-            <div class="row h-100  align-items-center justify-content-center" style="min-height: 40vh;">
+            <div class="row h-100  align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div> <?php alertMessage(); ?> </div><br>
                     <!-- <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3"> -->
-                        <?php 
-                        
-                        $userApplication = findUserApplication($_SESSION['loggedInUser']['id']);
-                        if($userApplication['status'] == 200) {?>
-
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <h4>Application Form</h4>
                         </div> 
-                   <form action="admin/code.php" enctype="multipart/form-data" method="POST" >
+                <form action="admin/code.php"  enctype="multipart/form-data" method="POST" >
+                        <?php if(isset($_SESSION["loggedInUser"])){
+                        $userItem = $_SESSION['loggedInUser'];
+                         if($userItem['firstname'] != '' && $userItem['role'] == 'user'){
+                        ?>
 
+                                <div class="col-md-4">
+                    <div class="text-center">
+                        <?php if($userItem['profile_image'] != 'default_pic.jpg')
+                        {?>
+                        <img id="profileImage"  alt="Picture of <?=$userItem['profile_image'];?>" src="<?=$userItem['profile_image'];?>" class="rounded-circle img-responsive mt-2" width="128" height="128">
+                        <?php 
+                        }
+                        else 
+                        {
+                            ?>
+                                <img id="profileImage"  alt="Picture of <?=$userItem['profile_image'];?>" src="myassets/uploads/services/default_pic.jpg" class="rounded-circle img-responsive mt-2" width="128" height="128">
+                            <?php
+                        }
+                        ?>
+                        <div class="mt-2">
+                            <span class="btn btn-primary" id="uploadBtn"><i class="fa fa-upload"></i></span>
+                        </div>
+                        <div class="mt-2">
+                            <input type="file" id="fileInput" name="profileImage" class="btn btn-primary" style="display: none;" accept="image/*">
+                        </div>
+         
+                    </div>
+                    </div>
                         <div class="form-group mb-3">
-                        <input type="text"  name="userId" hidden readonly id="inputId" required>
+                        <input type="text"  name="userId" hidden readonly id="inputId" value="<?=$userItem['id'];?>" required>
+                        </div>
+                        <div class="form-group mb-3">
+                             <label for="inputFullName"><b>Username</b> <span class="text-danger">*</span>  </label>
+                            <input type="text" class="form-control" name="inputFullName" readonly  id="inputFullName"  value="<?=$userItem['username'];?>" required>
                         </div>
                         <div class="form-group mb-3">
                              <label for="inputFullName"><b>Full Name</b> <span class="text-danger">*</span>  </label>
-                            <input type="text" class="form-control" name="inputFullName" readonly  value="<?= $userApplication['data']['firstname'].' '.$userApplication['data']['lastname']?>" id="inputFullName"   required>
+                            <input type="text" class="form-control" name="inputFullName" readonly  id="inputFullName"  value="<?=$userItem['firstname'].' '.$userItem['lastname'];?>" required>
                         </div>
                         <div class="form-group mb-3">
                              <label for="inputEmail"><b>Email <span class="text-danger">*</span> </label>
-                             <input type="email"  class="form-control" name="inputEmail" readonly value="<?= $userApplication['data']['email']?>"  id="inputEmail" required>
+                             <input type="email"  class="form-control" name="inputEmail" readonly  id="inputEmail" value="<?=$userItem['email'];?>" required>
+                        </div>
+                        <div class="form-group mb-3">
+                             <label for="inputPhone"><b>Phone Number</b> <span class="text-danger">*</span>  </label>
+                            <input type="text" class="form-control" name="inputPhone" readonly  id="inputFullName"  value="<?=$userItem['phone'];?>" required>
                         </div>
 
-                        <div class="form-group mb-3">
-                         <label>Select Grade <span class="text-danger">*</span> </label>
-                                <select name="inputGrade" required class="form-select">
-                                <option value="<?= $userApplication['data']['grade']; ?>" selected>
-                                    <?= $userApplication['data']['grade']; ?>
-                                </option>
-                            </select>
-                                <br>
-                        <div class="form-group mb-3">
-                        <label for="fileApplicationForm"><b>Application Form</b> <span class="text-danger">*</span>  </label><br>
-                        <a id="fileApplicationForm" href="<?= $userApplication['data']['application_form']?>" name="fileApplicationForm" class="form-control bg-light" required  accept=".pdf,application/pdf">Application File </a>
-                         </div>
-                        <div class="form-group mb-4">
-                        <label for="fileIdCopy"><b>Id Copy</b> <span class="text-danger">*</span>  </label>   
-                         <a  id="fileIdCopy" name="fileIdCopy" href="<?= $userApplication['data']['id_copy']?>" class="form-control bg-light"  required accept=".pdf,application/pdf"> Id Copy </a>
+                        <div class="d-flex justify-content-between">
+                            <div class="form-group mb-3">
+                        <button type="reset"  class="btn btn-warning py-3 w-100 mb-4">Reset</button>
+                            </div>
+                       <div class="form-group mb-3"> <button type="submit" name="submitApplication" class="btn btn-primary py-3 w-100 mb-4">Submit</button> </div>
                         </div>
-                        <div class="form-group mb-4">
-                            <label for="fileSchoolReport"><b>School Report</b> <span class="text-danger">*</span> </label>
-                            <a  id="fileSchoolReport" name="fileSchoolReport" href="<?= $userApplication['data']['school_report']?>" class="form-control bg-light"  required accept=".pdf,application/pdf"> School Report </a>
-                        </div>
-
-                        <button type="submit" name="submitApplication" class="btn btn-primary py-3 w-100 mb-4" disabled>Submit</button>
 
                     </div>
-                    <?php }else{?>
-            <div class="container-fluid  ">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex  justify-content-between mb-2">   
-                                <h4 >You haven't Applied:</h4>  
-                             <a href="application_form.php">Apply Now </a>
-                        </div>
-                        </div>
+                    <?php }}  else{?>
+                        <div class="form-group mb-4 justify-content-center">
+                            <h3 for="fileSchoolReportInput"><b>Unauthorized!!!</b> <span class="text-danger">*</span> </h3>
                         </div>
                        <?php }?>
- 
                 </form>
                 <!-- </div> -->
             </div>
