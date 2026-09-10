@@ -111,7 +111,7 @@ include("config/function.php");
                            <hr class="mt-0 mb-0"></hr>
                            <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal<?=$userItem['id'];?>">
                                 <h6 class="fw-normal mb-0"><b><?= $userItem['notification_name']; ?> </b></h6>
-                                <small> <?= timeAgo($notificationTime). ' '.$userItem['id']; ?></small>
+                                <small> <?= timeAgo($notificationTime);?></small>
                             </a>
                             <?php ++$countNotification; } } } } else{?>
                             <hr class="mt-0 mb-0"></hr>
