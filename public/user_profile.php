@@ -82,7 +82,7 @@ include("config/function.php");
                         
                         <?php if(isset($_SESSION['loggedInUser'])) {
 
-                            $userEmail = $_SESSION['loggedInUser']['email'];
+                            $userEmail = $_SESSION['loggedInUser']['id'];
                             $unreadCount = countUnreadNotifications($userEmail); 
                             $users = getAllNotifications("notifications", $userEmail);
 
@@ -90,7 +90,7 @@ include("config/function.php");
                         <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
-                            <sub class="badge bg-danger" style="margin-left:-13px;"><?php echo $unreadCount; ?> </sub>
+                            <sup class="badge bg-danger" style="margin-left:-13px;"><?php echo $unreadCount; ?> </sup>
                             <span class="d-none d-lg-inline-flex" style="display:none">Notifications</span>
                         </a> <?php } else {?> 
                          <div class="nav-item dropdown">
@@ -132,7 +132,7 @@ include("config/function.php");
                            <?php } ?>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="user_profile.php" class="dropdown-item">My Profile</a>
                             <a href="user_change_password.php" class="dropdown-item">Change Password</a>
                             <a href="user_delete_account.php" class="dropdown-item">Delete Account</a> 
                             <a href="logout.php" class="dropdown-item">Log Out</a>
