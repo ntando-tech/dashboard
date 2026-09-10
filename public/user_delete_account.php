@@ -99,19 +99,21 @@ include("config/function.php");
                             <span class="d-none d-lg-inline-flex" style="display:none">Notifications</span>
                         </a>
                             <?php } ?>
-     
+
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <?php
                             if(mysqli_num_rows($users) > 0){ 
+                                $countNotification = 1;
                                 foreach($users as $userItem) {
                                     $notificationTime = $userItem['created_date'] .' '. $userItem['created_time'];
-                                    if($userItem['reciptient_email'] == $userEmail) {?>
+                                    if($userItem['reciptient_email'] == $userEmail) {
+                                        if($countNotification < 4) {?>
                            <hr class="mt-0 mb-0"></hr>
-                           <a href="#" class="dropdown-item">
+                           <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal<?=$userItem['id'];?>">
                                 <h6 class="fw-normal mb-0"><b><?= $userItem['notification_name']; ?> </b></h6>
-                                <small> <?= timeAgo($notificationTime); ?></small>
+                                <small> <?= timeAgo($notificationTime). ' '.$userItem['id']; ?></small>
                             </a>
-                            <?php }}} else{?>
+                            <?php ++$countNotification; } } } } else{?>
                             <hr class="mt-0 mb-0"></hr>
                             <a href="#" class="dropdown-item">
                                 <h6 class="fw-normal mb-0">No new notifications</h6>
@@ -183,6 +185,41 @@ include("config/function.php");
         </div>
         <!-- Sign Up End -->
     </div>
+
+
+    <?php if(isset($_SESSION['loggedInUser'])){
+        $userEmail = $_SESSION['loggedInUser']['id'];
+        $unreadCount = countUnreadNotifications($userEmail);
+        $users = getAllNotifications("notifications", $userEmail);
+        if(mysqli_num_rows($users) > 0){
+            $countNotification = 1;
+            foreach($users as $userItem){?>
+            
+    <!-- The Modal -->
+<div class="modal" id="myModal<?=$userItem['id'];?>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Application Status</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <?=$userItem['notification_description']; ?>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div><?php } } } ?>
+<!--End Modal-->
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
