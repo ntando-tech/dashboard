@@ -91,7 +91,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                         
                         <?php if(isset($_SESSION['loggedInUser'])) {
 
-                            $userEmail = $_SESSION['loggedInUser']['email'];
+                            $userEmail = $_SESSION['loggedInUser']['id'];
                             $unreadCount = countUnreadNotifications($userEmail); 
                             $users = getAllNotifications("notifications", $userEmail);
 
@@ -99,7 +99,7 @@ if(!isset($_SESSION['auth']) && $_SESSION['loggedInUserRole'] != 'user')
                         <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <i class="fa fa-bell me-lg-2"></i>
-                            <sub class="badge bg-danger" style="margin-left:-13px;"><?php echo $unreadCount; ?> </sub>
+                            <sup class="badge bg-danger" style="margin-left:-13px;"><?php echo $unreadCount; ?> </sup>
                             <span class="d-none d-lg-inline-flex" style="display:none">Notifications</span>
                         </a> <?php } else {?> 
                          <div class="nav-item dropdown">
