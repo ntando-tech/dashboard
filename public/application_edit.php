@@ -333,12 +333,12 @@
                                     <h6>Application Status</h6>
                                    
                                     <select name="status" class="form-select">
-                                        <option value="Pending" <?php $user["data"]["application_status"]== "Pending"? "selected" : ""; ?>>Pending</option>
-                                        <option value="Under Review" <?php $user["data"]["application_status"] == "Under Review" ? "selected": "" ?>>Under Review</option>
-                                        <option value="More Information Required" <?php $user["data"]["application_status"] == "More Information Required" ? "selected": ""?> >More Information Required</option>
-                                        <option value="Approved" <?php $user["data"]["application_status"] == "Approved" ? "selected": ""?> >Approved</option>
-                                        <option value="Rejected" <?php $user["data"]["application_status"] == "Rejected" ? "selected": ""?> >Rejected</option>
-                                        <option value="Withdrawn" <?php $user["data"]["application_status"] == "Withdrawn" ? "selected": ""?> >Withdrawn</option>
+                                        <option value="Pending" <?= $user["data"]["application_status"]== "Pending"? "selected" : ""; ?>>Pending</option>
+                                        <option value="Under Review" <?= $user["data"]["application_status"] == "Under Review" ? "selected": "" ?>>Under Review</option>
+                                        <option value="More Information Required" <?= $user["data"]["application_status"] == "More Information Required" ? "selected": ""?> >More Information Required</option>
+                                        <option value="Approved" <?= $user["data"]["application_status"] == "Approved" ? "selected": ""?> >Approved</option>
+                                        <option value="Rejected" <?= $user["data"]["application_status"] == "Rejected" ? "selected": ""?> >Rejected</option>
+                                        <option value="Withdrawn" <?= $user["data"]["application_status"] == "Withdrawn" ? "selected": ""?> >Withdrawn</option>
                                     </select>
                                 </div>
                             </div>
