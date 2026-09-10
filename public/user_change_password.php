@@ -142,7 +142,7 @@ include("config/function.php");
             </nav>
             <!-- Navbar End -->
 
-            <div class="row h-100  align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="row h-100  align-items-center justify-content-center" style="min-height: 60vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div> <?php alertMessage(); ?> </div><br>
                     <!-- <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3"> -->
